@@ -5,22 +5,48 @@ module.exports = {
         multiclient: true,
         tokensecret: 'yolo',
         database: {
-            ip: "",
-            name: "",
-            id: "",
-            port: ""
+            user: "",
+            password: "",
+            server: "",
+            database: "opennos"
+        },
+        email: '',
+        email_config: {
+            host: '',
+            port: 1337,
+            secure: false,
+            auth: {
+                user: '',
+                pass: ''
+            },
+            tls: {
+                rejectUnauthorized: false
+            }
         }
     },
     "NosFun": {
         ip: "127.0.0.1",
-        port: 6000,
-        multiclient: false,
+        port: 5050,
+        multiclient: true,
         tokensecret: 'yolo',
         database: {
-            ip: "",
-            name: "",
-            id: "",
-            port: ""
+            user: "",
+            password: "",
+            server: "",
+            database: "opennos"
+        },
+        email: '',
+        email_config: {
+            host: '',
+            port: 1337,
+            secure: false,
+            auth: {
+                user: '',
+                pass: ''
+            },
+            tls: {
+                rejectUnauthorized: false
+            }
         }
-    }
+    },
 };

@@ -1,16 +1,17 @@
-const express = require('express');
-const path = require('path');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const config = require('./config/config');
-const translate = require('./config/translate');
+import express from "express";
+import path from "path";
+import logger from "morgan";
+import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
+import config from "./config/config";
+import translate from "./config/translate";
+
 
 global.config = config;
 global.translate = translate;
 
-const index = require('./routes/index');
-const users = require('./routes/users');
+const launcher = require('./routes/launcher/index');
+const user = require('./routes/user/index');
 
 const app = express();
 
@@ -26,8 +27,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', users);
+app.use('/launcher/', index);
+app.use('/user/', user);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

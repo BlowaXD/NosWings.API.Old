@@ -1,6 +1,6 @@
 'use strict';
-const sql = require('mssql');
-const jwt = require('jsonwebtoken');
+import sql from "mssql";
+import nodemailer from "nodemailer";
 
 const GET_ACCOUNT = "SELECT TOP 1 Name, password FROM [dbo].[Account] WHERE [Name] = '";
 
@@ -35,16 +35,14 @@ async function login(req, res) {
 
     /* If yes, throw an error */
     if (recordset.length === 0)
-        return res.status(403).send({error: global.translate.USER_ALREADY_EXIST});
+        return res.status(403).send({error: global.translate.USER_DOES_NOT_EXIST});
 
-    if (recordset[0].email === account.email) {
-        /*
-        ** IMPLEMENT EMAIL SENDING THROUGH SMTP
-         */
+    if (recordset[0].email !== account.email) {
+        return res.status(403).send({error: global.translate.WRONG_PASSWORD})
     }
+    let transport = nodemailer.createTransport(server.email_config);
 
     /* WRONG EMAIL */
-    return res.status(403).send({error: global.translate.WRONG_PASSWORD})
 }
 
 module.exports = login;

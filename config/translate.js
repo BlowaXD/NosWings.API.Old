@@ -8,6 +8,13 @@ module.exports = {
     "WRONG_EMAIL": "",
     "NICE_TRY_SQL_INJECTION": "Haha, t'as essayé, mais t'es nul désolé",
     "USER_ALREADY_EXIST": "",
+    "USER_DOES_NOT_EXIST": "",
     "ERROR_IN_DATABASE": "",
-    "REGISTER_SUCCESSFULL": ""
+    "REGISTER_SUCCESSFULL": "",
+    "REGISTRATION_EMAIL_SUBJECT": "",
+    "REGISTRATION_EMAIL_HTML": "",
+    "REGISTRATION_EMAIL_HTML_REGARDS": "",
+    "REGISTRATION_EMAIL_TEXT": "",
+    "REGISTRATION_EMAIL_TEXT_REGARDS": "",
+    "REGISTRATION_EMAIL_ERROR": ""
 };
