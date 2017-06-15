@@ -12,9 +12,9 @@ async function register(req, res) {
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     const server = global.config[req.body.server];
 
+    /* Some checks */
     if (!server)
         return res.status(403).send({error: 'Wrong Server'});
-    /* Some checks */
     if (!validator.isEmail(email))
         return res.status(403).send({error: 'Email incorrect'});
     if (!validator.isAlphanumeric(username))
