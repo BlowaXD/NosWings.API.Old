@@ -61,11 +61,8 @@ async function register(req, res) {
         return res.status(500).send({error: global.translate.ERROR_IN_DATABASE});
     }
 
-    /*
-    ** SEND MAIL TO CONFIRM
-     */
+    /* SEND MAIL TO CONFIRM */
     let transport = nodemailer.createTransport(server.email_config);
-
     let mailOptions = {
         from: {server} + '<' + server.email + '>', // sender address
         to: email, // list of receivers
@@ -75,11 +72,11 @@ async function register(req, res) {
     };
     mailOptions.text += verificationToken + global.translate.REGISTRATION_EMAIL_TEXT_REGARDS;
     mailOptions.html += verificationToken + global.translate.REGISTRATION_EMAIL_HTML_REGARDS;
-
     recordset = await transporter.sendMail(mailOptions);
     if (recordset) {
         return res.status(500).send({error: global.translate.REGISTRATION_EMAIL_ERROR});
     }
+    
     /* REGISTRATION DONE SUCCESSFULLY */
     return res.status(200).send({success: global.translate.REGISTER_SUCCESSFULL});
 }
