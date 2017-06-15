@@ -2,8 +2,8 @@
 const config = require('../../../config/secret.js');
 const sql = require('mssql');
 
-const REGISTER_REQUEST = 'SELECT TOP 1 Name FROM [dbo].[Account] WHERE [Name] = \'';
-const INSERT_USER_REQUEST = 'INSERT INTO dbo.Account (Authority, LastCompliment, LastSession, Name, Password, Email, RegistrationIp) VALUES (0, 0, 0, \'';
+const REGISTER_REQUEST = 'SELECT TOP 1 Name FROM [dbo].[Account] WHERE [Name] =';
+const INSERT_USER_REQUEST = 'INSERT INTO dbo.Account (Authority, LastCompliment, LastSession, Name, Password, Email, RegistrationIp) VALUES (0, 0, 0,';
 
 async function register (req, res)
 {
@@ -28,7 +28,10 @@ async function register (req, res)
     try
     {
         await sql.connect(config.db);
-        recordset = await new sql.Request().query(`${REGISTER_REQUEST}${username}'`);
+
+        const request = new sql.Request();
+        request.input('username', sql.VarChar, username);
+        recordset = await request.query(`${REGISTER_REQUEST} @username`);
     }
     catch (error)
     {
@@ -44,7 +47,13 @@ async function register (req, res)
     let hashedPassword = require('crypto').createHash('sha512').update(password).digest('hex');
     try
     {
-        await new sql.Request().query(`${INSERT_USER_REQUEST}${username}"', '${hashedPassword}', '${email}', '${ip}')`);
+        const request = new sql.Request();
+        
+        request.input('username', sql.VarChar, username);
+        request.input('hashedPassword', sql.VarChar, hashedPassword);
+        request.input('email', sql.VarChar, email);
+        request.input('ip', sql.VarChar, ip);
+        await request.query(`${INSERT_USER_REQUEST} @username, @hashedPassword, @email, @ip)`);
     }
     catch (error)
     {
