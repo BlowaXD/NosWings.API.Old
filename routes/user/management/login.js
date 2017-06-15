@@ -9,15 +9,15 @@ async function login(req, res) {
         username: req.body.username,
         hashedPassword: req.body.hashedPassword,
     };
-    const server = global.config[req.body.server]
+    const server = global.config[req.body.server];
 
     /* Some checks */
     if (!server)
-        return res.status(403).send({error: 'Wrong Server'});
+        return res.status(403).send({error: global.translate.WRONG_SERVER});
     if (!validator.isAlphanumeric(hashedPassword))
-        return res.status(403).send({error: 'Email incorrect'});
+        return res.status(403).send({error: global.translate.WRONG_PASSWORD});
     if (!validator.isAlphanumeric(username))
-        return res.status(403).send({error: 'Nom d\'utilisateur incorrect'});
+        return res.status(403).send({error: global.translate.WRONG_USERNAME});
 
     /* Await the BD connection & check if username is already taken */
     let recordset;
@@ -34,16 +34,16 @@ async function login(req, res) {
     }
 
     /* If yes, throw an error */
-    if (recordset.length !== 0)
-        return res.status(403).send({error: global.translate.USER_ALREADY_EXIST});
+    if (recordset.length === 0)
+        return res.status(403).send({error: global.translate.COULD_NOT_FIND_USER});
 
     if (recordset[0].password === account.hashedPassword) {
-        /* AUTH LAUNCHER FOR 1 HOUR */
+        /* AUTH USER FOR 1 HOUR */
         let token = jwt.sign(account, server.tokenSecret, {expiresIn: 3600});
-        return res.status(200).send({success: 'Authentifié', token: token});
+        return res.status(200).send({success: global.translate.AUTHENTICATED, token: token});
     }
     /* WRONG PASSWORD */
-    return res.status(403).send({error: 'Mot de passe eronné'})
+    return res.status(403).send({error: global.translate.AUTHENTICATED})
 }
 
 module.exports = login;
