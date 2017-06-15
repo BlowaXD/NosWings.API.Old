@@ -31,7 +31,7 @@ async function register(req, res) {
 
         const request = new sql.Request();
         request.input('username', sql.VarChar, username);
-        recordset = await request.query(`${REGISTER_REQUEST} @username'`);
+        recordset = await request.query(`${REGISTER_REQUEST} @username`);
     }
     catch (error) {
         console.log(error);
