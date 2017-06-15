@@ -9,15 +9,15 @@ async function login(req, res) {
         username: req.body.username,
         email: req.body.email,
     };
-    const server = global.config[req.body.server]
+    const server = global.config[req.body.server];
 
     /* Some checks */
     if (!server)
-        return res.status(403).send({error: 'Wrong Server'});
+        return res.status(403).send({error: global.translate.WRONG_SERVER});
     if (!validator.isAlphanumeric(username))
-        return res.status(403).send({error: 'Email incorrect'});
-    if (!validator.isEmail(username))
-        return res.status(403).send({error: 'Nom d\'utilisateur incorrect'});
+        return res.status(403).send({error: global.translate.WRONG_USERNAME});
+    if (!validator.isEmail(email))
+        return res.status(403).send({error: global.translate.WRONG_EMAIL});
 
     /* Await the BD connection & check if username is already taken */
     let recordset;
@@ -44,7 +44,7 @@ async function login(req, res) {
     }
 
     /* WRONG EMAIL */
-    return res.status(403).send({error: 'Mot de passe eronné'})
+    return res.status(403).send({error: global.translate.WRONG_PASSWORD})
 }
 
 module.exports = login;
