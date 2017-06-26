@@ -1,6 +1,6 @@
 'use strict';
-import nodemailer from "nodemailer";
-import sql from "mssql";
+const nodemailer = require("nodemailer");
+const sql = require("mssql");
 
 const REGISTER_REQUEST = 'SELECT TOP 1 Name FROM [dbo].[Account] WHERE [Name] =';
 const INSERT_USER_REQUEST = 'INSERT INTO dbo.Account (Authority, LastCompliment, LastSession, Name, Password, Email, RegistrationIp) VALUES (0, 0, 0,';

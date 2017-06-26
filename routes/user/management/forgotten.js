@@ -1,6 +1,6 @@
 'use strict';
-import sql from "mssql";
-import nodemailer from "nodemailer";
+const sql = require("mssql");
+const nodemailer = require("nodemailer");
 
 const GET_ACCOUNT = "SELECT TOP 1 Name, password FROM [dbo].[Account] WHERE [Name] = '";
 

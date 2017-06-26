@@ -2,4 +2,13 @@
  * Created by Blowa on 6/15/2017.
  */
 
-exports.management = require("./management/index.js");
+const express = require("express");
+const router = express.Router();
+
+
+const management = require("./management/index.js");
+
+
+router.use(management);
+
+module.exports = router;
