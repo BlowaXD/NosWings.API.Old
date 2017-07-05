@@ -2,8 +2,8 @@
 const nodemailer = require("nodemailer");
 const sql = require("mssql");
 
-const REGISTER_REQUEST = 'SELECT TOP 1 Name FROM [dbo].[Account] WHERE [Name] =';
-const INSERT_USER_REQUEST = 'INSERT INTO dbo.Account (Authority, LastCompliment, LastSession, Name, Password, Email, RegistrationIp) VALUES (0, 0, 0,';
+const REGISTER_REQUEST = 'SELECT TOP 1 Name FROM [dbo].[Account] WHERE [Name] = @username';
+const INSERT_USER_REQUEST = 'INSERT INTO dbo.Account (Authority, LastCompliment, LastSession, Name, Password, Email, RegistrationIp, VerificationToken) VALUES (0, 0, 0, @username, @password, @email, @registrationIp, @veriftoken)';
 
 async function register(req, res) {
     const email = req.body.email;
@@ -50,11 +50,11 @@ async function register(req, res) {
         const request = new sql.Request();
 
         request.input('username', sql.VarChar, username);
-        request.input('hashedPassword', sql.VarChar, hashedPassword);
+        request.input('password', sql.VarChar, hashedPassword);
         request.input('email', sql.VarChar, email);
         request.input('ip', sql.VarChar, ip);
         request.input('veriftoken', sql.VarChar, verificationToken);
-        await request.query(`${INSERT_USER_REQUEST} @username, @hashedPassword, @email, @ip, @veriftoken)`);
+        await request.query(`${INSERT_USER_REQUEST}`);
     }
     catch (error) {
         console.log(error);
