@@ -18,5 +18,9 @@ module.exports = {
     "REGISTRATION_EMAIL_HTML_REGARDS": "",
     "REGISTRATION_EMAIL_TEXT": "",
     "REGISTRATION_EMAIL_TEXT_REGARDS": "",
-    "REGISTRATION_EMAIL_ERROR": ""
+    "REGISTRATION_EMAIL_ERROR": "",
+    "TITLE_DASHBOARD": "",
+    "TITLE_SHOP": "",
+    "TITLE_CART": "",
+    "TITLE_LOGIN": "Interface de connexion"
 };
