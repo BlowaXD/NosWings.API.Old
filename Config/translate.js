@@ -19,7 +19,7 @@ module.exports = {
     "REGISTRATION_EMAIL_TEXT": "",
     "REGISTRATION_EMAIL_TEXT_REGARDS": "",
     "REGISTRATION_EMAIL_ERROR": "",
-    "TITLE_DASHBOARD": "",
+    "TITLE_DASHBOARD": "Gestion Utilisateur",
     "TITLE_SHOP": "",
     "TITLE_CART": "",
     "TITLE_LOGIN": "Interface de connexion"

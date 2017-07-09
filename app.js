@@ -16,7 +16,7 @@ const shop = require('./routes/shop/index');
 const app = express();
 
 app.use(function (req, res, next) {
-    res.locals.domain = global.config[0];
+    res.locals.domain = global.config.domain;
     next();
 });
 
@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/launcher', launcher);
 app.use('/user', user);
-app.use('/shop', shop);
+app.use('/', shop);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

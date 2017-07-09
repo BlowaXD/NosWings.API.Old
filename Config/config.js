@@ -1,4 +1,5 @@
 module.exports = {
+    domain: "NosWings",
     "NosWings": {
         ip: "127.0.0.1",
         port: 5050,
