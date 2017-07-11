@@ -20,9 +20,10 @@ module.exports = {
     "REGISTRATION_EMAIL_TEXT_REGARDS": "",
     "REGISTRATION_EMAIL_ERROR": "",
     "TITLE_DASHBOARD": "Accueil",
-    "TITLE_USER_MANAGEMENT": "Accueil",
-    "TITLE_SHOP_CATEGORY_PET": "Accueil",
-    "TITLE_SHOP": "",
+    "TITLE_REGISTER": "Inscription",
+    "TITLE_USER_MANAGEMENT": "Gestion de compte",
+    "TITLE_SHOP_CATEGORY_PET": "Nosmall - Pets",
+    "TITLE_SHOP": "Nosmall",
     "TITLE_CART": "",
     "TITLE_LOGIN": "Interface de connexion"
 };

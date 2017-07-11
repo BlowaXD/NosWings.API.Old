@@ -10,7 +10,6 @@ global.config = config;
 global.translate = translate;
 
 const launcher = require('./routes/launcher/index');
-const user = require('./routes/user/index');
 const shop = require('./routes/shop/index');
 
 const app = express();
@@ -29,7 +28,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/launcher', launcher);
-app.use('/user', user);
 app.use('/', shop);
 
 // catch 404 and forward to error handler
