@@ -19,7 +19,7 @@
         var table = $('#tableWithSearch');
 
         var settings = {
-            "sDom": "<'table-responsive't><'row'<p i>>",
+            "sDom": "<t><'row'<p i>>",
             "destroy": true,
             "scrollCollapse": true,
             "oLanguage": {
@@ -43,7 +43,7 @@
 
 
         var settings = {
-            "sDom": "<'table-responsive't><'row'<p i>>",
+            "sDom": "<t><'row'<p i>>",
             "destroy": true,
             "scrollCollapse": true,
             "oLanguage": {

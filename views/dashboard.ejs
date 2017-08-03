@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
-<% include shared/head.ejs %>
-<body class="fixed-header ">
+<head>
+    <% include shared/head.ejs %>
+</head>
+<body class="fixed-header menu-pin">
 <% include shared/sidepanel.ejs %>
 <!-- START PAGE-CONTAINER -->
 <div class="page-container ">
@@ -10,46 +12,87 @@
     <div class="page-content-wrapper ">
         <!-- START PAGE CONTENT -->
         <div class="content ">
-            <!-- START JUMBOTRON -->
-            <div class="jumbotron" data-pages="parallax">
-                <div class="container-fluid container-fixed-lg sm-p-l-20 sm-p-r-20">
-                    <div class="inner">
-                        <!-- START BREADCRUMB -->
-                        <ul class="breadcrumb">
-                            <li>
-                                <p><%- locals.domain %></p>
-                            </li>
-                            <li><a href="#" class="active"><%- locals.title %></a>
-                            </li>
-                        </ul>
-                        <!-- END BREADCRUMB -->
+            <!-- START CONTAINER FLUID -->
+            <div class=" container-fluid   container-fixed-lg">
+                <o class="breadcrumb"></o>
+                <!-- BEGIN PlACE PAGE CONTENT HERE -->
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card card-default">
+                            <div class="card-header ">
+                                <div class="card-title">{NOM PERSONNAGE 1}
+                                </div>
+                                <div class="card-controls">
+                                    <ul>
+                                        <li><a data-toggle="close" class="card-close" href="#"><i
+                                                        class="card-icon card-icon-close"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <p><img src="http://www.renders-graphiques.fr/image/upload/normal/1052_render_sp4archer.png"
+                                        height="100"/></p>
+                                <p><b>CLASSE</b> : {CLASS}</p>
+                                <p><b>LEVEL</b> : {LEVEL}(+XX)</p>
+                                <p><b>JOB LEVEL</b> : {JOBLEVEL}</p>
+                                <p><b>GOLD</b> : {1 000 000 000}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card card-default">
+                            <div class="card-header ">
+                                <div class="card-title">{NOM PERSONNAGE 1}
+                                </div>
+                                <div class="card-controls">
+                                    <ul>
+                                        <li><a data-toggle="close" class="card-close" href="#"><i
+                                                        class="card-icon card-icon-close"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <p><img src="http://www.renders-graphiques.fr/image/upload/normal/1052_render_sp4archer.png"
+                                        height="100"/></p>
+                                <p><b>CLASSE</b> : {CLASS}</p>
+                                <p><b>LEVEL</b> : {LEVEL}(+XX)</p>
+                                <p><b>JOB LEVEL</b> : {JOBLEVEL}</p>
+                                <p><b>GOLD</b> : {1 000 000 000}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card card-default">
+                            <div class="card-header ">
+                                <div class="card-title">{NOM PERSONNAGE 1}
+                                </div>
+                                <div class="card-controls">
+                                    <ul>
+                                        <li><a data-toggle="close" class="card-close" href="#"><i
+                                                        class="card-icon card-icon-close"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <p><img src="http://www.renders-graphiques.fr/image/upload/normal/1052_render_sp4archer.png"
+                                        height="100"/></p>
+                                <p><b>CLASSE</b> : {CLASS}</p>
+                                <p><b>LEVEL</b> : {LEVEL}(+XX)</p>
+                                <p><b>JOB LEVEL</b> : {JOBLEVEL}</p>
+                                <p><b>GOLD</b> : {1 000 000 000}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- END JUMBOTRON -->
-            <!-- START CONTAINER FLUID -->
-            <div class="container-fluid container-fixed-lg">
-                <!-- BEGIN PlACE PAGE CONTENT HERE -->
-                THIS WILL APPEAR SOON² (YOLOSWAG)
                 <!-- END PLACE PAGE CONTENT HERE -->
             </div>
             <!-- END CONTAINER FLUID -->
         </div>
         <!-- END PAGE CONTENT -->
-        <!-- START COPYRIGHT -->
-        <!-- START CONTAINER FLUID -->
-        <!-- START CONTAINER FLUID -->
-        <div class="container-fluid container-fixed-lg footer">
-            <div class="copyright sm-text-center">
-                <p class="small no-margin pull-left sm-pull-reset">
-                    <span class="hint-text">Copyright &copy; 2017 </span>
-                    <span class="font-montserrat">GameField</span>.
-                    <span class="hint-text">All rights reserved. </span>
-                </p>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        <!-- END COPYRIGHT -->
+        <% include shared/copyright.ejs %>
     </div>
     <!-- END PAGE CONTENT WRAPPER -->
 </div>

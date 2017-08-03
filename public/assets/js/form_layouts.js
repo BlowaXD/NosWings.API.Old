@@ -17,10 +17,18 @@
         $('#start-date, #end-date').datepicker();
 
         $('#form-personal').validate();
-
         $("#form-project").validate();
-
         $("#form-work").validate();
+
+        $('#form-personal').submit(function(e){
+          e.preventDefault()
+        })
+        $('#form-project').submit(function(e){
+          e.preventDefault()
+        })
+        $('#form-work').submit(function(e){
+          e.preventDefault()
+        })
 
     });
 

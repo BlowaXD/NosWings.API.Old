@@ -23,7 +23,7 @@
                     $('#rootwizard').find('.pager .finish').hide();
                 }
 
-                var li = navigation.find('li.active');
+                var li = navigation.find('li a.active').parent();
 
                 var btnNext = $('#rootwizard').find('.pager .next').find('button');
                 var btnPrev = $('#rootwizard').find('.pager .previous').find('button');

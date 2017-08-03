@@ -14,8 +14,8 @@ router.get('/register', function (req, res) {
     res.render('register', {title: global.translate.TITLE_REGISTER})
 });
 
-router.get('/usermanagement', function (req, res) {
-    res.render('usermanagement', {title: global.translate.TITLE_USER_MANAGEMENT});
+router.get('/user', function (req, res) {
+    res.render('user', {title: global.translate.TITLE_USER_MANAGEMENT});
 });
 
 router.get('/login', function (req, res) {

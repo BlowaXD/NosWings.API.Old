@@ -1,17 +1,10 @@
+
 <!-- BEGIN SIDEBPANEL-->
 <nav class="page-sidebar" data-pages="sidebar">
     <!-- BEGIN SIDEBAR MENU HEADER-->
     <div class="sidebar-header">
         <img src="/assets/img/logo_white.png" alt="logo" class="brand" data-src="/assets/img/logo_white.png"
              data-src-retina="/assets/img/logo_white_2x.png" width="78" height="22">
-        <div class="sidebar-header-controls">
-            <button type="button" class="btn btn-xs sidebar-slide-toggle btn-link m-l-20">
-                <i class="fa fa-angle-down fs-16"></i>
-            </button>
-            <button type="button" class="btn btn-link visible-lg-inline" data-toggle-pin="sidebar"><i
-                        class="fa fs-12"></i>
-            </button>
-        </div>
     </div>
     <!-- END SIDEBAR MENU HEADER-->
     <!-- START SIDEBAR MENU -->
@@ -20,59 +13,28 @@
         <ul class="menu-items">
             <li class="m-t-30 ">
                 <a href="/" class="detailed">
-                    <span class="title">Accueil</span>
-                    <span class="details">Accueil</span>
+                    <span class="title">{Accueil}</span>
+                    <span class="details">{DESCRIPTION ACCUEIL}</span>
                 </a>
                 <span class="bg-success icon-thumbnail"><i class="pg-home"></i></span>
             </li>
             <li class="">
                 <a href="/user" class="detailed">
-                    <span class="title">Mon compte</span>
-                    <span class="details">Modifiez vos informations</span>
+                    <span class="title">{ACCOUNT}</span>
+                    <span class="details">{DESCRIPTION ACCOUNT}</span>
                 </a>
-                <span class="icon-thumbnail"><i class="fa fa-user"></i></span>
+                <span class="icon-thumbnail"><i class="pg-mail"></i></span>
             </li>
-            <li class="">
-                <a href="javascript:;"><span class="title">Boutique</span>
-                    <span class="arrow"></span></a>
+            <li>
+                <a href="javascript:;"><span class="title">{SHOP}</span>
+                    <span class=" arrow"></span></a>
                 <span class="icon-thumbnail"><i class="pg-shopping_cart"></i></span>
                 <ul class="sub-menu">
-                    <li>
-                        <a href="/categories/">
-                            <span class="title">Accueil</span>
-                        </a>
-                        <span class="icon-thumbnail">+</span>
-                        <a href="javascript:">
-                            <span class="title">Catégories</span>
-                            <span class="arrow"></span>
-                        </a>
-                        <span class="icon-thumbnail"><i class="fa fa-bars"></i></span>
-                        <ul class="sub-menu">
-                            <li>
-                                <a href="/shop/categories/costumes">Costumes</a>
-                                <span class="icon-thumbnail"><i class="fa fa-bars"></i></span>
-                            </li>
-                            <li>
-                                <a href="/shop/categories/personnage">Consommables</a>
-                                <span class="icon-thumbnail"><i class="fa fa-bars"></i></span>
-                            </li>
-                        </ul>
+                    <li class="">
+                        <a href="/shop/">{CATEGORIES}</a>
+                        <span class="icon-thumbnail">{B}</span>
                     </li>
                 </ul>
-            </li>
-            <li class="m-t-30">
-                <a href="" class="detailed">
-                    <span class="title">Panel GM</span>
-                    <span class="details">Permission >= GM</span>
-                </a>
-                <span class="bg-warning-dark icon-thumbnail"><i class="fa fa-2x fa-bolt"></i></span>
-            </li>
-            <li class="">
-                <a href="" class="detailed">
-                    <span class="title">Panel Admin</span>
-                    <span class="details">Permission >= ADMIN</span>
-                </a>
-                <span class="bg-danger-dark icon-thumbnail"><i class="fa fa-2x fa-fire"></i></span>
             </li>
         </ul>
         <div class="clearfix"></div>

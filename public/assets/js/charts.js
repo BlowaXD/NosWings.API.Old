@@ -31,7 +31,7 @@
             var graph = new Rickshaw.Graph({
                 element: document.querySelector(container),
                 height: 500,
-                width: 700,
+                width: $(container).width(),
                 renderer: 'area',
                 padding: {
                     top: 0.5
@@ -489,7 +489,7 @@
         // Redraw charts on tab change because charts are drawn when their parent tabs are hidden
         $('#tabs-rickshaw a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
             var chart;
-            var target = $(e.target).attr('href');
+            var target = $(e.target).attr('data-target');
             var tabPane = $(target);
             var chart = tabPane.find('.rickshaw-chart').data('chart');
 
@@ -503,7 +503,7 @@
         });
 
         $('#tabs-nvd3 a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-            var target = $(e.target).attr('href');
+            var target = $(e.target).attr('data-target');
             var tabPane = $(target);
             var chart = tabPane.find('.line-chart').data('chart');
             chart.update();
@@ -514,7 +514,7 @@
         });
 
         $('#tabs-sparkline a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-            var target = $(e.target).attr('href');
+            var target = $(e.target).attr('data-target');
             var tabPane = $(target);
 
             if (tabPane.find('#sparkline-pie').length) {

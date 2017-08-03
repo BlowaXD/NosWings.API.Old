@@ -638,11 +638,11 @@
 
         bars.each(function() {
             var elem = $(this);
-            elem.portlet({
+            elem.card({
                 progress: 'bar',
                 onRefresh: function() {
                     setTimeout(function() {
-                        elem.portlet({
+                        elem.card({
                             refresh: false
                         });
                     }.bind(this), 2000);
@@ -653,11 +653,11 @@
 
         circles.each(function() {
             var elem = $(this);
-            elem.portlet({
+            elem.card({
                 progress: 'circle',
                 onRefresh: function() {
                     setTimeout(function() {
-                        elem.portlet({
+                        elem.card({
                             refresh: false
                         });
                     }.bind(this), 2000);
@@ -667,14 +667,14 @@
 
         circlesLg.each(function() {
             var elem = $(this);
-            elem.portlet({
+            elem.card({
                 progress: 'circle-lg',
                 progressColor: 'white',
                 overlayColor: '0,0,0',
                 overlayOpacity: 0.6,
                 onRefresh: function() {
                     setTimeout(function() {
-                        elem.portlet({
+                        elem.card({
                             refresh: false
                         });
                     }.bind(this), 2000);
@@ -685,13 +685,13 @@
 
         circlesLgMaster.each(function() {
             var elem = $(this);
-            elem.portlet({
+            elem.card({
                 progress: 'circle-lg',
                 progressColor: 'master',
                 overlayOpacity: 0.6,
                 onRefresh: function() {
                     setTimeout(function() {
-                        elem.portlet({
+                        elem.card({
                             refresh: false
                         });
                     }.bind(this), 2000);

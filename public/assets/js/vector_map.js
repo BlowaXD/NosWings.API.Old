@@ -44,14 +44,18 @@
             $("#country-list").select2({
                 data: countryList,
                 width: "240px"
+            }).on('select2:open', function() {
+                $.fn.scrollbar && $('.select2-results__options').scrollbar({
+                    ignoreMobile: false
+                })
             });
 
         });
 
         // jump to country on select2 change
         $('#country-list').change(function() {
-            var sel = $('#country-list').select2('data');
-            window.location.hash = sel.id;
+            var sel = $('#country-list').val();
+            window.location.hash = sel;
         });
 
     });
