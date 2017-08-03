@@ -1,4 +1,5 @@
 const express = require("express");
+const helmet = require("helmet");
 const path = require("path");
 const logger = require("morgan");
 const cookieParser = require("cookie-parser");
@@ -27,6 +28,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
+app.use(helmet());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/launcher', launcher);
