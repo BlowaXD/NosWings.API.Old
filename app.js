@@ -1,3 +1,4 @@
+'use strict';
 const express = require("express");
 const path = require("path");
 const logger = require("morgan");
@@ -13,6 +14,7 @@ const launcher = require('./routes/launcher/index');
 const shop = require('./routes/shop/index');
 const admin = require('./routes/shop/admin');
 const moderator = require('./routes/shop/moderator');
+const authentication = require('./middleware/authentication');
 
 const app = express();
 
@@ -29,9 +31,13 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+/* Basic routes */
 app.use('/launcher', launcher);
 app.use('/', shop);
 app.use('/admin', admin);
+
+/* Authentication middleware */
+app.use(authentication);
 app.use('/moderator', moderator);
 
 // catch 404 and forward to error handler
