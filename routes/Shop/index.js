@@ -6,8 +6,8 @@ router.get('/', function (req, res) {
     res.render('dashboard', {title: global.translate.TITLE_DASHBOARD});
 });
 
-router.get('/catalogue/', function (req, res) {
-    res.render('catalogue', {title: global.translate.TITLE_DASHBOARD});
+router.get('/shop/', function (req, res) {
+    res.render('shop', {title: global.translate.TITLE_DASHBOARD});
 });
 
 router.get('/register', function (req, res) {
