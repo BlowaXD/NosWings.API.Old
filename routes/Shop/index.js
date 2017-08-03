@@ -6,6 +6,10 @@ router.get('/', function (req, res) {
     res.render('dashboard', {title: global.translate.TITLE_DASHBOARD});
 });
 
+router.get('/recharge', function (req, res) {
+    res.render('recharge', {title: global.translate.TITLE_DASHBOARD});
+});
+
 router.get('/shop/', function (req, res) {
     res.render('shop', {title: global.translate.TITLE_DASHBOARD});
 });
