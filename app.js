@@ -11,6 +11,8 @@ global.translate = translate;
 
 const launcher = require('./routes/launcher/index');
 const shop = require('./routes/shop/index');
+const admin = require('./routes/shop/admin');
+const moderator = require('./routes/shop/moderator');
 
 const app = express();
 
@@ -29,6 +31,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/launcher', launcher);
 app.use('/', shop);
+app.use('/admin', admin);
+app.use('/moderator', moderator);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
