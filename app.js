@@ -1,20 +1,33 @@
 'use strict';
+/*
+** MODULES
+ */
 const express = require("express");
+const helmet = require("helmet");
 const path = require("path");
 const logger = require("morgan");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-const config = require("./Config/config");
-const translate = require("./Config/translate");
 
-global.config = config;
-global.translate = translate;
+/*
+** ROUTES
+ */
 
 const launcher = require('./routes/launcher/index');
 const shop = require('./routes/shop/index');
 const admin = require('./routes/shop/admin');
 const moderator = require('./routes/shop/moderator');
 const authentication = require('./middleware/authentication');
+
+
+/*
+** GLOBALS
+ */
+const config = require("./Config/config");
+const translate = require("./Config/translate");
+
+global.config = config;
+global.translate = translate;
 
 const app = express();
 
@@ -25,10 +38,15 @@ app.use(function (req, res, next) {
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+/*
+** MIDDLEWARES
+ */
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
+app.use(helmet());
 app.use(express.static(path.join(__dirname, 'public')));
 
 /* Basic routes */
@@ -39,6 +57,11 @@ app.use('/admin', admin);
 /* Authentication middleware */
 app.use(authentication);
 app.use('/moderator', moderator);
+
+// NEED TO CHECK IF SESSION OR REDIRECT TO LOGIN
+app.get('*', function(req, res) {
+   res.render('dashboard');
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
