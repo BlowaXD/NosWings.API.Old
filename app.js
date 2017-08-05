@@ -1,7 +1,7 @@
 'use strict';
 /*
 ** MODULES
- */
+*/
 const express = require("express");
 const helmet = require("helmet");
 const path = require("path");
