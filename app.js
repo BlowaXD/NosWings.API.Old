@@ -11,23 +11,17 @@ const bodyParser = require("body-parser");
 
 /*
 ** ROUTES
- */
-
+*/
 const launcher = require('./routes/launcher/index');
 const shop = require('./routes/shop/index');
 const admin = require('./routes/shop/admin');
 const moderator = require('./routes/shop/moderator');
-const authentication = require('./middleware/authentication');
-
 
 /*
 ** GLOBALS
- */
-const config = require("./Config/config");
-const translate = require("./Config/translate");
-
-global.config = config;
-global.translate = translate;
+*/
+global.config = require("./Config/config");
+global.translate = require("./Config/translate");
 
 const app = express();
 
@@ -41,7 +35,7 @@ app.set('view engine', 'ejs');
 
 /*
 ** MIDDLEWARES
- */
+*/
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -54,14 +48,13 @@ app.use('/launcher', launcher);
 app.use('/', shop);
 app.use('/admin', admin);
 
-/* Authentication middleware */
-app.use(authentication);
+/* Need authentication middleware */
 app.use('/moderator', moderator);
 
 // NEED TO CHECK IF SESSION OR REDIRECT TO LOGIN
-app.get('*', function(req, res) {
+/*app.get('*', function(req, res) {
    res.render('dashboard');
-});
+});*/
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
