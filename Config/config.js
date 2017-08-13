@@ -4,7 +4,7 @@ module.exports = {
         ip: "127.0.0.1",
         port: 5050,
         multiclient: true,
-        tokensecret: 'yolo',
+        tokenSecret: '',
         database: {
             user: "",
             password: "",

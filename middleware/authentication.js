@@ -7,7 +7,7 @@ function authRequired(req, res, next)
     const token = req.body.token || req.query.token || req.headers['x-access-token'];
 
     if (!token)
-        return res.redirect(req.protocol + '://' + req.get('host') + '/login');
+        return res.sendStatus(403);
 
     try
     {
@@ -15,9 +15,8 @@ function authRequired(req, res, next)
     }
     catch(err)
     {
-        res.redirect(req.protocol + '://' + req.get('host') + '/login');
+        return res.sendStatus(403);
     }
-
     next();
 }
 

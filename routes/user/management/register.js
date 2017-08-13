@@ -1,4 +1,5 @@
 'use strict';
+const validator = require('validator');
 const nodemailer = require("nodemailer");
 const sql = require("mssql");
 
@@ -76,7 +77,7 @@ async function register(req, res) {
     if (recordset) {
         return res.status(500).send({error: global.translate.REGISTRATION_EMAIL_ERROR});
     }
-    
+
     /* REGISTRATION DONE SUCCESSFULLY */
     return res.status(200).send({success: global.translate.REGISTER_SUCCESSFULL});
 }

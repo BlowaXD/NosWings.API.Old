@@ -6,7 +6,7 @@ const express = require("express");
 const router = express.Router();
 
 
-const management = require("./management/index.js");
+const management = require("./management");
 
 
 router.use(management);

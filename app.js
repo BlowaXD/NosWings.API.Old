@@ -12,10 +12,8 @@ const bodyParser = require("body-parser");
 /*
 ** ROUTES
 */
-const launcher = require('./routes/launcher/index');
-const shop = require('./routes/shop/index');
-const admin = require('./routes/shop/admin');
-const moderator = require('./routes/shop/moderator');
+const launcher = require('./routes/launcher');
+const user = require('./routes/user');
 
 /*
 ** GLOBALS
@@ -41,11 +39,7 @@ app.use(helmet());
 
 /* Basic routes */
 app.use('/launcher', launcher);
-app.use('/', shop);
-app.use('/admin', admin);
-
-/* Need authentication middleware */
-app.use('/moderator', moderator);
+app.use('/user', user);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -61,8 +55,7 @@ app.use(function (err, req, res, next) {
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
     // render the error page
-    res.status(err.status || 500);
-    res.render('error');
+    res.sendStatus(err.status || 500);
 });
 
 module.exports = app;

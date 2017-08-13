@@ -1,4 +1,5 @@
 'use strict';
+const validator = require('validator');
 const sql = require('mssql');
 const jwt = require('jsonwebtoken');
 
