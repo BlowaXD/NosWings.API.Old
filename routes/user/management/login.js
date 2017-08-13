@@ -3,7 +3,12 @@ const validator = require('validator');
 const sql = require('mssql');
 const jwt = require('jsonwebtoken');
 
-const GET_ACCOUNT = 'SELECT TOP 1 Name, Password FROM [dbo].[Account] WHERE [Name] =';
+const GET_ACCOUNT = `
+    SELECT TOP 1 [Name], [Password], [Permissions]
+    FROM [dbo].[Account]
+    LEFT JOIN _AccountPerm
+        ON [_AccountPerm].[AccountId] = [Account].[AccountId]
+    WHERE [Name] =`;
 
 async function login(req, res) {
     const server = global.config[req.body.server];
@@ -42,6 +47,7 @@ async function login(req, res) {
 
     if (recordset[0].Password === account.hashedPassword) {
         /* AUTH USER FOR 1 HOUR */
+        account.permissions = recordset[0].Permissions || null;
         let token = jwt.sign(account, server.tokenSecret, {expiresIn: 3600});
         return res.status(200).send({success: global.translate.AUTHENTICATED, token: token});
     }
