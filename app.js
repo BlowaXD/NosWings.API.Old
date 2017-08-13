@@ -30,9 +30,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
 /*
 ** MIDDLEWARES
 */
@@ -41,7 +38,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(helmet());
-app.use(express.static(path.join(__dirname, 'public')));
 
 /* Basic routes */
 app.use('/launcher', launcher);
@@ -50,11 +46,6 @@ app.use('/admin', admin);
 
 /* Need authentication middleware */
 app.use('/moderator', moderator);
-
-// NEED TO CHECK IF SESSION OR REDIRECT TO LOGIN
-/*app.get('*', function(req, res) {
-   res.render('dashboard');
-});*/
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
