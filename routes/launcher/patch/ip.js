@@ -1,11 +1,18 @@
-/**
- * Created by Blowa on 6/15/2017.
- */
-exports.modules = function (data, ip) {
+/*
+** Created by Blowa on 6/15/2017.
+** Fixed by DarkyZ on 16/08/2017.
+*/
+const findPattern = require("./findPattern.js").findPattern;
+
+module.exports = function (data, ip) {
     let replacement = [];
     const ptrnHost = [0x65, 0x73, 0x74, 0x00, 0xFF, 0xFF, 0xFF, 0xFF];
 
-    let offset = require("./findPattern.js").findPattern(datas, ptrnHost);
+    let offset = findPattern(data, ptrnHost);
+
+    if (offset === -1)
+        return;
+
     if (offset !== -1) {
         offset += ptrnHost.length;
         replacement.push({

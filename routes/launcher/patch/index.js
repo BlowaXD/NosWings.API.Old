@@ -27,11 +27,13 @@ router.post('/', function (req, res) {
     if (!filedata || !patchs.ip || !patchs.port || !patchs.multiclient)
         return res.sendStatus(400);
 
-    replacements.push(ip(filedata, patchs.ip));
-    if (patchs.port)
+    const patch_ip = ip(filedata, patchs.ip);
+    if (patch_ip)
+        replacements.push(patch_ip);
+    /*if (patchs.port)
         replacements.push(port(filedata, patchs.port));
-    if (patchs.multiclient !== false)
-        replacements.push(multiclient(filedata));
+    /*if (patchs.multiclient === true)
+        replacements.push(multiclient(filedata));*/
 
     res.send(replacements);
 });
