@@ -49,5 +49,5 @@ module.exports = function (data, ip) {
             data: 0
         });
     }
-    return (replacement);
+    return replacement;
 };

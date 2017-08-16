@@ -34,9 +34,14 @@ router.post('/', function (req, res) {
         replacements = replacements.concat(patch_ip);
     if (patch_port)
         replacements = replacements.concat(patch_port);
-    /*if (patchs.multiclient === true)
-        replacements.push(multiclient(filedata));*/
 
+    if (patchs.multiclient !== true)
+        return res.send(replacements);
+
+    const patch_multiclient = multiclient(filedata);
+
+    if (patch_multiclient)
+        replacements = replacements.concat(patch_multiclient);
     res.send(replacements);
 });
 
