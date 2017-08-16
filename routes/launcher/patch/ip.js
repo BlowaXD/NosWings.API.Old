@@ -2,7 +2,7 @@
 ** Created by Blowa on 6/15/2017.
 ** Fixed by DarkyZ on 16/08/2017.
 */
-const findPattern = require("./findPattern.js").findPattern;
+const findPattern = require('./findPattern.js').findPattern;
 
 module.exports = function (data, ip) {
     let replacement = [];
