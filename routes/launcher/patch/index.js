@@ -28,11 +28,12 @@ router.post('/', function (req, res) {
         return res.sendStatus(400);
 
     const patch_ip = ip(filedata, patchs.ip);
+    const patch_port = port(filedata, patchs.port);
 
     if (patch_ip)
         replacements = replacements.concat(patch_ip);
-    /*if (patchs.port)
-        replacements.push(port(filedata, patchs.port));
+    if (patch_port)
+        replacements = replacements.concat(patch_port);
     /*if (patchs.multiclient === true)
         replacements.push(multiclient(filedata));*/
 
