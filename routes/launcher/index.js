@@ -12,11 +12,9 @@ const express = require("express");
 const router = express.Router();
 
 const patch = require("./patch/index.js");
-const auth = require("./auth/index.js");
 const update = require("./update/index.js");
 
-router.route('/auth', auth);
-router.route('/patch', patch);
-router.route('/update', update);
+router.post('/patch', patch);
+router.post('/update', update);
 
 module.exports = router;
