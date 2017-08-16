@@ -36,5 +36,4 @@ function findPatternWithMask(src, pattern, mask) {
     return -1;
 }
 
-exports.findPattern = findPattern;
-exports.findPatternWithMask = findPatternWithMask;
+module.exports = { findPattern, findPatternWithMask };

@@ -8,13 +8,10 @@
 
  */
 
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const patch = require("./patch/index.js");
-const update = require("./update/index.js");
-
-router.post('/patch', patch);
-router.post('/update', update);
+router.post('/patch', require('./patch'));
+router.post('/update', require('./update'));
 
 module.exports = router;

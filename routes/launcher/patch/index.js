@@ -16,13 +16,14 @@ const port = require("./port.js");
 const multiclient = require("./multiclient.js");
 
 router.post("/update", function (req, res) {
+    const replacements = [];
     const filedata = req.body.filedata;
     const patchs = {
         ip: req.body.ip,
         port: req.body.port,
         multiclient: req.body.multiclient
     };
-    let replacements = [];
+
     replacements.push(ip(filedata, patchs.ip));
     if (patchs.port)
         replacements.push(port(filedata, patchs.port));
