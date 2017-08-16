@@ -13,43 +13,41 @@ module.exports = function (data, ip) {
     if (offset === -1)
         return;
 
-    if (offset !== -1) {
-        offset += ptrnHost.length;
+    offset += ptrnHost.length;
+    replacement.push({
+        offset: offset,
+        data: ip.length
+    });
+    offset += 4;
+    for (let i = 0; i < ip.length; i++) {
         replacement.push({
-            offset: offset,
-            data: ip.length
+            offset: offset + i,
+            data: ip[i].charCodeAt(0)
         });
-        offset += 4;
-        for (let i = 0; i < ip.length; i++) {
-            replacement.push({
-                offset: offset + i,
-                data: ip[i]
-            });
-        }
-        for (let i = ip.length; i < 15; i++) {
-            replacement.push({
-                offset: offset + i,
-                data: 0
-            });
-        }
-        offset += 20;
+    }
+    for (let i = ip.length; i < 15; i++) {
         replacement.push({
-            offset: offset,
-            data: ip.length
+            offset: offset + i,
+            data: 0
         });
-        offset += 4;
-        for (let i = 0; i < ip.length; i++) {
-            replacement.push({
-                offset: offset + i,
-                data: ip[i]
-            });
-        }
-        for (let i = ip.length; i < 15; i++) {
-            replacement.push({
-                offset: offset + i,
-                data: 0
-            });
-        }
+    }
+    offset += 20;
+    replacement.push({
+        offset: offset,
+        data: ip.length
+    });
+    offset += 4;
+    for (let i = 0; i < ip.length; i++) {
+        replacement.push({
+            offset: offset + i,
+            data: ip[i].charCodeAt(0)
+        });
+    }
+    for (let i = ip.length; i < 15; i++) {
+        replacement.push({
+            offset: offset + i,
+            data: 0
+        });
     }
     return (replacement);
 };

@@ -16,8 +16,8 @@ const port = require('./port.js');
 const multiclient = require('./multiclient.js');
 
 router.post('/', function (req, res) {
-    const replacements = [];
-    const filedata = req.body.filedata;
+    let replacements = [];
+    const filedata = req.body.filedata.data;
     const patchs = {
         ip: req.body.ip,
         port: req.body.port,
@@ -28,8 +28,9 @@ router.post('/', function (req, res) {
         return res.sendStatus(400);
 
     const patch_ip = ip(filedata, patchs.ip);
+
     if (patch_ip)
-        replacements.push(patch_ip);
+        replacements = replacements.concat(patch_ip);
     /*if (patchs.port)
         replacements.push(port(filedata, patchs.port));
     /*if (patchs.multiclient === true)
