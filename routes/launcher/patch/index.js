@@ -8,14 +8,14 @@
 
  */
 
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const ip = require("./ip.js");
-const port = require("./port.js");
-const multiclient = require("./multiclient.js");
+const ip = require('./ip.js');
+const port = require('./port.js');
+const multiclient = require('./multiclient.js');
 
-router.post("/update", function (req, res) {
+router.post('/', function (req, res) {
     const replacements = [];
     const filedata = req.body.filedata;
     const patchs = {
@@ -24,12 +24,16 @@ router.post("/update", function (req, res) {
         multiclient: req.body.multiclient
     };
 
+    if (!filedata || !patchs.ip || !patchs.port || !patchs.multiclient)
+        return res.sendStatus(400);
+
     replacements.push(ip(filedata, patchs.ip));
     if (patchs.port)
         replacements.push(port(filedata, patchs.port));
     if (patchs.multiclient !== false)
         replacements.push(multiclient(filedata));
-    console.log(replacements);
+
+    res.send(replacements);
 });
 
 module.exports = router;
