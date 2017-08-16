@@ -17,11 +17,12 @@ const multiclient = require('./multiclient.js');
 
 router.post('/', function (req, res) {
     let replacements = [];
+    const server = req.body.server || 'NosWings';
     const filedata = req.body.filedata.data;
     const patchs = {
-        ip: req.body.ip,
-        port: req.body.port,
-        multiclient: req.body.multiclient
+        ip: global.config[server].ip,
+        port: global.config[server].port,
+        multiclient: global.config[server].multiclient
     };
 
     if (!filedata || !patchs.ip || !patchs.port || !patchs.multiclient)
