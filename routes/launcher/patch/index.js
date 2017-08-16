@@ -23,10 +23,10 @@ router.post("/update", function (req, res) {
         multiclient: req.body.multiclient
     };
     let replacements = [];
-    replacements.push(ip(filedata));
-    if (changePort)
-        replacements.push(port(filedata));
-    if (setMulticlient)
+    replacements.push(ip(filedata, patchs.ip));
+    if (patchs.port)
+        replacements.push(port(filedata, patchs.port));
+    if (patchs.multiclient !== false)
         replacements.push(multiclient(filedata));
     console.log(replacements);
 });
