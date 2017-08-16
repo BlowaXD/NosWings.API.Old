@@ -11,6 +11,7 @@
 const express = require('express');
 const router = express.Router();
 
+router.use('/login', require('./login'));
 router.use('/patch', require('./patch'));
 /* router.use('/update', require('./update')); */
 
