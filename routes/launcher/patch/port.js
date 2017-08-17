@@ -26,6 +26,6 @@ function patch(data, port)
         })
     }
     return replacement;
-};
+}
 
 module.exports = patch;

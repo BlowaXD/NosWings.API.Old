@@ -23,6 +23,7 @@ async function login(req, res)
 
     /* Await the BD connection & check if username is already taken */
     let recordset;
+    sql.close();
     try
     {
         await sql.connect(server.database);
@@ -31,13 +32,14 @@ async function login(req, res)
         request.input('username', sql.VarChar, account.username);
         recordset = await request.query(`${GET_ACCOUNT} @username`);
         recordset = recordset.recordset || [];
-        sql.close();
     }
     catch (error)
     {
+        sql.close();
         console.log(error);
         return res.status(500).send(global.translate.ERROR_IN_DATABASE);
     }
+    sql.close();
 
     /* If yes, throw an error */
     if (recordset.length <= 0)
