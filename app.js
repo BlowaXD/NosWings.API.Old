@@ -13,7 +13,6 @@ const bodyParser = require("body-parser");
 ** ROUTES
 */
 const launcher = require('./routes/launcher');
-const user = require('./routes/user');
 
 /*
 ** GLOBALS
@@ -39,7 +38,6 @@ app.use(helmet());
 
 /* Basic routes */
 app.use('/launcher', launcher);
-app.use('/user', user);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

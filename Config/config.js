@@ -26,24 +26,23 @@ module.exports = {
         }
     },
     'NosWings': {
-        ip: '127.0.0.1',
-        port: 5050,
+        ip: '164.132.206.181',
+        port: 4002,
         multiclient: true,
-        tokenSecret: '',
+        tokenSecret: 'giuheriuhteruihtehurihtiuehiujthiu',
         database: {
-            user: '',
+            user: 'noswings_site',
             password: '',
-            server: '',
-            database: ''
+            server: '164.132.206.181',
+            database: 'opennos'
         },
-        email: '',
         email_config: {
-            host: '',
-            port: 1337,
-            secure: false,
+            host: 'noswings.fr',
+            port: 587,
+            secure: false, // secure:true for port 465, secure:false for port 587
             auth: {
-                user: '',
-                pass: ''
+                user: 'noreply@noswings.fr',
+                pass: 'cZhz57@8DOpqnzwn'
             },
             tls: {
                 rejectUnauthorized: false
