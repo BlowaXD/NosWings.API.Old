@@ -1,5 +1,10 @@
+'use strict';
 module.exports = {
     domain: 'NosWings',
+    servers: [
+        'Official',
+        'NosWings'
+    ],
     'Official': {
         ip: '79.110.84.75',
         port: 4002,
