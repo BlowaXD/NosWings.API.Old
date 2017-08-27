@@ -13,6 +13,7 @@ const router = express.Router();
 
 router.use('/servers', require('./servers'));
 router.use('/login', require('./login'));
+router.use('/launcher/update', require('./update/checkUpdate.js'));
 router.use('/patch', require('./patch'));
 /* router.use('/update', require('./update')); */
 
