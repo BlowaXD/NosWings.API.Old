@@ -47,9 +47,10 @@ async function login(req, res)
     /* If yes, throw an error */
     if (recordset.length <= 0)
         return res.status(403).send(global.translate.COULD_NOT_FIND_USER);
+
     saved_pass = recordset[0].Password;
 
-    /* Log */
+    /* Check if banned */
     try
     {
         const request = await server.db.request()
@@ -67,7 +68,7 @@ async function login(req, res)
         return res.status(500).send(global.translate.ERROR_IN_DATABASE);
     }
 
-    /* Check if banned */
+    /* Log */
     try
     {
         const request = await server.db.request()

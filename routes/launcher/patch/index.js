@@ -54,4 +54,4 @@ router.post('/', async function (req, res) {
     return res.send(recordset);
 });
 
-module.exports = router;
+module.exports = patch;
