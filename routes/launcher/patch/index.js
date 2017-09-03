@@ -8,9 +8,7 @@
 
  */
 
-const express = require('express');
 const config = require('../../../Config/config');
-const router = express.Router();
 const sql = require("mssql");
 
 const QUERY_GET_PATCHS = "SELECT\n" +
@@ -20,8 +18,7 @@ const QUERY_GET_PATCHS = "SELECT\n" +
     "  JOIN _GF_Launcher_Patchs ON _GF_Launcher_PatchValues.HashId = _GF_Launcher_Patchs.Id\n" +
     "WHERE Hash = @hash;";
 
-router.post('/', async function (req, res) {
-
+async function patch(req, res) {
     const hash = req.body.hash;
 
     sql.close();
@@ -49,6 +46,6 @@ router.post('/', async function (req, res) {
     }
 
     return res.send(replacements);
-});
+}
 
-module.exports = router;
+module.exports = patch;
