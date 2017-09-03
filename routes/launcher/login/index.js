@@ -30,15 +30,15 @@ async function login(req, res)
 
     /* Await the BD connection & check if username is already taken */
     let recordset;
-    sql.close();
     try
     {
         await sql.connect(server.database);
 
         const request = new sql.Request();
         request.input('username', sql.VarChar, account.username);
-        recordset = await request.query(`${GET_ACCOUNT}`);
+        recordset = await request.query(GET_ACCOUNT);
         recordset = recordset.recordset || [];
+        sql.close();
     }
     catch (error)
     {
@@ -46,13 +46,11 @@ async function login(req, res)
         console.log(error);
         return res.status(500).send(global.translate.ERROR_IN_DATABASE);
     }
-    sql.close();
 
     /* If yes, throw an error */
     if (recordset.length <= 0)
         return res.status(403).send(global.translate.COULD_NOT_FIND_USER);
 
-    sql.close();
     try
     {
         await sql.connect(server.database);
@@ -61,8 +59,9 @@ async function login(req, res)
         request.input('ipaddress', sql.VarChar, account.ipaddress);
         request.input('uuid', sql.VarChar, account.uuid);
         request.input('computername', sql.VarChar, account.computername);
-        recordset = await request.query(`${GET_BANS}`);
+        recordset = await request.query(GET_BANS);
         recordset = recordset.recordset || [];
+        sql.close();
     }
     catch (error)
     {
@@ -70,11 +69,11 @@ async function login(req, res)
         console.log(error);
         return res.status(500).send(global.translate.ERROR_IN_DATABASE);
     }
-    sql.close();
 
     /* If yes, throw an error */
     if (recordset.length > 0)
         return res.status(403).send(global.translate.BANNED);
+
     try
     {
         await sql.connect(server.database);
@@ -85,8 +84,9 @@ async function login(req, res)
         request.input('ipaddress', sql.VarChar, account.ipaddress);
         request.input('uuid', sql.VarChar, account.uuid);
         request.input('computername', sql.VarChar, account.computername);
-        recordset = await request.query(`${ADD_LOG}`);
+        recordset = await request.query(ADD_LOG);
         recordset = recordset.recordset || [];
+        sql.close();
     }
     catch (error)
     {
