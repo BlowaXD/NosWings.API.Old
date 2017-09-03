@@ -28,5 +28,7 @@ module.exports = {
     "TITLE_SHOP": "Nosmall",
     "TITLE_CART": "TITLE_CART",
     "BANNED": "Vous avez été banni",
-    "TITLE_LOGIN": "Interface de connexion"
+    "TITLE_LOGIN": "Interface de connexion",
+    "NEED_UPDATE": "Votre client n'est pas à jour.",
+    "WRONG_HASH": "WRONG_HASH"
 };

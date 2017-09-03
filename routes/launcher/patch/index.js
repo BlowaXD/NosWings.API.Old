@@ -7,49 +7,51 @@
  \/     \/      \/     \/    \/            \/           \/
 
  */
-
+'use strict';
+const sql = require('mssql');
 const express = require('express');
 const config = require('../../../Config/config');
-const router = express.Router();
-const sql = require("mssql");
 
-const QUERY_GET_PATCHS = "SELECT\n" +
-    "  [Offset],\n" +
-    "  [Value]\n" +
-    "FROM _GF_Launcher_PatchValues\n" +
-    "  JOIN _GF_Launcher_Patchs ON _GF_Launcher_PatchValues.HashId = _GF_Launcher_Patchs.Id\n" +
-    "WHERE Hash = @hash;";
+const router = express.Router();
+
+const QUERY_GET_PATCHS = `
+    SELECT [Offset], [Value]
+    FROM _GF_Launcher_PatchValues
+    JOIN _GF_Launcher_Patchs
+        ON _GF_Launcher_PatchValues.HashId = _GF_Launcher_Patchs.Id
+    WHERE Hash = @hash`;
 
 router.post('/', async function (req, res) {
-
     const hash = req.body.hash;
+    const server = global.config[req.body.server || 'NosWings'];
     let replacements;
-
-
-    sql.close();
-    /* Await the BD connection & check if username is already taken */
     let recordset;
-    try {
-        await sql.connect(config.db);
 
-        const request = new sql.Request();
-        request.input('hash', sql.VarChar, hash);
-        recordset = await request.query(`${QUERY_GET_PATCHS}`);
+    /* Some checks */
+    if (!server)
+        return res.status(403).send(global.translate.WRONG_SERVER);
+    if (!hash)
+        return res.status(403).send(global.translate.WRONG_HASH);
+
+    /* Await the BD connection & check if username is already taken */
+    try
+    {
+        const request = await server.db.request()
+            .input('hash', sql.VarChar, hash)
+            .query(QUERY_GET_PATCHS);
+        recordset = request.recordset;
     }
-    catch (error) {
-        sql.close();
+    catch (error)
+    {
         console.log(error);
         return res.status(500).send({error: global.translate.ERROR_IN_DATABASE});
     }
 
-    replacements = recordset.recordset;
-
-    if (!remplacement)
+    if (!recordset)
     {
-        return res.status(500).send({error: global.translate.ERROR_IN_DATABASE});
+        return res.status(500).send({error: global.translate.NEED_UPDATE});
     }
-
-    return res.send(replacements);
+    return res.send(recordset);
 });
 
 module.exports = router;
