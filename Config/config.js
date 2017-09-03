@@ -2,9 +2,9 @@
 const sql = require('mssql');
 
 const db_default = {
-    user: 'noswings_staff',
-    password: 'yVFWUVKHjImVk3Kt5p8haEdl',
-    server: '163.172.106.204',
+    user: 'noswings_site',
+    password: 'LXV35i4Y4pn5sN7F6hbw',
+    server: '164.132.206.181',
     database: 'opennos'
 };
 

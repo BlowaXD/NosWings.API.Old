@@ -9,10 +9,7 @@
  */
 'use strict';
 const sql = require('mssql');
-const express = require('express');
 const config = require('../../../Config/config');
-
-const router = express.Router();
 
 const QUERY_GET_PATCHS = `
     SELECT [Offset], [Value]
@@ -21,7 +18,8 @@ const QUERY_GET_PATCHS = `
         ON _GF_Launcher_PatchValues.HashId = _GF_Launcher_Patchs.Id
     WHERE Hash = @hash`;
 
-router.post('/', async function (req, res) {
+async function getPatch(req, res)
+{
     const hash = req.body.hash;
     const server = global.config[req.body.server || 'NosWings'];
     let replacements;
@@ -52,6 +50,6 @@ router.post('/', async function (req, res) {
         return res.status(500).send({error: global.translate.NEED_UPDATE});
     }
     return res.send(recordset);
-});
+}
 
-module.exports = patch;
+module.exports = getPatch;

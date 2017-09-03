@@ -54,24 +54,6 @@ async function login(req, res)
     try
     {
         const request = await server.db.request()
-            .input('account', sql.VarChar, account.username)
-            .input('server', sql.VarChar, server)
-            .input('ipaddress', sql.VarChar, account.ipaddress)
-            .input('uuid', sql.VarChar, account.uuid)
-            .input('computername', sql.VarChar, account.computername)
-            .query(ADD_LOG);
-        recordset = request.recordset || [];
-    }
-    catch (error)
-    {
-        console.log(error);
-        return res.status(500).send(global.translate.ERROR_IN_DATABASE);
-    }
-
-    /* Log */
-    try
-    {
-        const request = await server.db.request()
             .input('ipaddress', sql.VarChar, account.ipaddress)
             .input('uuid', sql.VarChar, account.uuid)
             .input('computername', sql.VarChar, account.computername)
@@ -87,6 +69,24 @@ async function login(req, res)
     /* If yes, throw an error */
     if (recordset.length > 0)
         return res.status(403).send(global.translate.BANNED);
+
+    /* Log */
+    try
+    {
+        const request = await server.db.request()
+            .input('account', sql.VarChar, account.username)
+            .input('server', sql.VarChar, server)
+            .input('ipaddress', sql.VarChar, account.ipaddress)
+            .input('uuid', sql.VarChar, account.uuid)
+            .input('computername', sql.VarChar, account.computername)
+            .query(ADD_LOG);
+        recordset = request.recordset || [];
+    }
+    catch (error)
+    {
+        console.log(error);
+        return res.status(500).send(global.translate.ERROR_IN_DATABASE);
+    }
 
     /* Check password */
     if (saved_pass === account.hashedPassword)
