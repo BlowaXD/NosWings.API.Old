@@ -1,5 +1,5 @@
 module.exports = {
-    "AUTHENTICATED": "AUTHENTICATED",
+    "AUTHENTICATED": "Authentifié",
     "NOT_AUTHENTICATED": "NOT_AUTHENTICATED",
     "COULD_NOT_FIND_USER": "COULD_NOT_FIND_USER",
     "PASSWORD_SUCCESSFULLY_CHANGED": "PASSWORD_SUCCESSFULLY_CHANGED",
@@ -27,5 +27,6 @@ module.exports = {
     "TITLE_SHOP_CATEGORY_PET": "Nosmall - Pets",
     "TITLE_SHOP": "Nosmall",
     "TITLE_CART": "TITLE_CART",
+    "BANNED": "Vous avez été banni"
     "TITLE_LOGIN": "Interface de connexion"
 };
