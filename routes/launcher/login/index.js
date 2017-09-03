@@ -17,6 +17,7 @@ async function login(req, res)
         computername: req.body.hostname,
         uuid: req.body.uuid
     };
+    let saved_pass;
 
     /* Some checks */
     if (!server)
@@ -50,7 +51,31 @@ async function login(req, res)
     /* If yes, throw an error */
     if (recordset.length <= 0)
         return res.status(403).send(global.translate.COULD_NOT_FIND_USER);
+    saved_pass = recordset[0].Password;
 
+    /* Log */
+    try
+    {
+        await sql.connect(server.database);
+
+        const request = new sql.Request();
+        request.input('account', sql.VarChar, account.username);
+        request.input('server', sql.VarChar, server);
+        request.input('ipaddress', sql.VarChar, account.ipaddress);
+        request.input('uuid', sql.VarChar, account.uuid);
+        request.input('computername', sql.VarChar, account.computername);
+        recordset = await request.query(ADD_LOG);
+        recordset = recordset.recordset || [];
+        sql.close();
+    }
+    catch (error)
+    {
+        sql.close();
+        console.log(error);
+        return res.status(500).send(global.translate.ERROR_IN_DATABASE);
+    }
+
+    /* Check if banned */
     try
     {
         await sql.connect(server.database);
@@ -74,33 +99,13 @@ async function login(req, res)
     if (recordset.length > 0)
         return res.status(403).send(global.translate.BANNED);
 
-    try
-    {
-        await sql.connect(server.database);
-
-        const request = new sql.Request();
-        request.input('account', sql.VarChar, account.username);
-        request.input('server', sql.VarChar, server);
-        request.input('ipaddress', sql.VarChar, account.ipaddress);
-        request.input('uuid', sql.VarChar, account.uuid);
-        request.input('computername', sql.VarChar, account.computername);
-        recordset = await request.query(ADD_LOG);
-        recordset = recordset.recordset || [];
-        sql.close();
-    }
-    catch (error)
-    {
-        sql.close();
-        console.log(error);
-        return res.status(500).send(global.translate.ERROR_IN_DATABASE);
-    }
-
-
-    if (recordset[0].Password === account.hashedPassword)
+    /* Check password */
+    if (saved_pass === account.hashedPassword)
     {
         let token = jwt.sign(account, server.tokenSecret, { expiresIn: 10800 });
         return res.status(200).send({success: global.translate.AUTHENTICATED, token: token});
     }
+    
     /* WRONG PASSWORD */
     return res.status(403).send(global.translate.NOT_AUTHENTICATED);
 }
