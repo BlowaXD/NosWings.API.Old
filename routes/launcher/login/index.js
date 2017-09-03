@@ -3,9 +3,9 @@ const validator = require('validator');
 const sql = require('mssql');
 const jwt = require('jsonwebtoken');
 
-const GET_ACCOUNT = 'SELECT TOP 1 [Name], [Password] FROM [dbo].[Account] WHERE [Name] = @username';
-const GET_BANS = 'SELECT TOP 1 [Value] FROM [dbo].[_GF_Launcher_Bans] WHERE [Value] = @ipaddress OR [Value] = @uuid OR [Value] = @computername';
-const ADD_LOG = "INSERT INTO [opennos].[dbo].[_GF_Launcher_ConnectionLog] ([AccountName], [Server], [IpAddress], [UUID], [ComputerName]) VALUES (@account, @server, @ipaddress, @uuid, @computername)";
+const GET_ACCOUNT = 'SELECT TOP 1 [Name], [Password] FROM [dbo].[Account] WHERE [Name] = @username;';
+const GET_BANS = 'SELECT TOP 1 [Value] FROM [dbo].[_GF_Launcher_Bans] WHERE [Value] = @ipaddress OR [Value] = @uuid OR [Value] = @computername;';
+const ADD_LOG = "INSERT INTO [dbo].[_GF_Launcher_ConnectionLog] ([AccountName], [Server], [IpAddress], [UUID], [ComputerName]) VALUES (@account, @server, @ipaddress, @uuid, @computername)";
 
 async function login(req, res)
 {
@@ -14,7 +14,7 @@ async function login(req, res)
         username: req.body.username,
         hashedPassword: req.body.hashedPassword,
         ipaddress: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-        computername: req.body.computername,
+        computername: req.body.hostname,
         uuid: req.body.uuid
     };
 
@@ -25,7 +25,7 @@ async function login(req, res)
         return res.status(403).send(global.translate.WRONG_PASSWORD);
     if (!account.username || !validator.isAlphanumeric(account.username))
         return res.status(403).send(global.translate.WRONG_USERNAME);
-    if (!account.ipaddress || !account.computername || account.uuid)
+    if (!account.ipaddress || !account.computername || !account.uuid)
         return res.status(403).send("NOPE");
 
     /* Await the BD connection & check if username is already taken */
@@ -75,7 +75,6 @@ async function login(req, res)
     /* If yes, throw an error */
     if (recordset.length > 0)
         return res.status(403).send(global.translate.BANNED);
-
     try
     {
         await sql.connect(server.database);

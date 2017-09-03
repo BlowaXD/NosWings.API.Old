@@ -27,6 +27,6 @@ module.exports = {
     "TITLE_SHOP_CATEGORY_PET": "Nosmall - Pets",
     "TITLE_SHOP": "Nosmall",
     "TITLE_CART": "TITLE_CART",
-    "BANNED": "Vous avez été banni"
+    "BANNED": "Vous avez été banni",
     "TITLE_LOGIN": "Interface de connexion"
 };

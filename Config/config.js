@@ -2,43 +2,17 @@
 module.exports = {
     domain: 'NosWings',
     servers: [
-        'Official',
         'NosWings'
     ],
-    'Official': {
-        ip: '79.110.84.75',
-        port: 4002,
-        multiclient: true,
-        tokenSecret: '',
-        database: {
-            user: '',
-            password: '',
-            server: '',
-            database: ''
-        },
-        email: '',
-        email_config: {
-            host: '',
-            port: 1337,
-            secure: false,
-            auth: {
-                user: '',
-                pass: ''
-            },
-            tls: {
-                rejectUnauthorized: false
-            }
-        }
-    },
     'NosWings': {
         ip: '164.132.206.181',
         port: 4002,
         multiclient: true,
         tokenSecret: 'giuheriuhteruihtehurihtiuehiujthiu',
         database: {
-            user: 'noswings_site',
-            password: '',
-            server: '164.132.206.181',
+            user: 'sa',
+            password: 'root',
+            server: 'localhost',
             database: 'opennos'
         },
         email_config: {
@@ -53,30 +27,5 @@ module.exports = {
                 rejectUnauthorized: false
             }
         }
-    },
-    'NosFun': {
-        ip: '127.0.0.1',
-        port: 5050,
-        multiclient: true,
-        tokensecret: 'yolo',
-        database: {
-            user: '',
-            password: '',
-            server: '',
-            database: 'opennos'
-        },
-        email: '',
-        email_config: {
-            host: '',
-            port: 1337,
-            secure: false,
-            auth: {
-                user: '',
-                pass: ''
-            },
-            tls: {
-                rejectUnauthorized: false
-            }
-        }
-    },
+    }
 };
