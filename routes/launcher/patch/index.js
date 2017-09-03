@@ -23,8 +23,6 @@ const QUERY_GET_PATCHS = "SELECT\n" +
 router.post('/', async function (req, res) {
 
     const hash = req.body.hash;
-    let replacements;
-
 
     sql.close();
     /* Await the BD connection & check if username is already taken */
@@ -34,7 +32,7 @@ router.post('/', async function (req, res) {
 
         const request = new sql.Request();
         request.input('hash', sql.VarChar, hash);
-        recordset = await request.query(`${QUERY_GET_PATCHS}`);
+        recordset = await request.query(QUERY_GET_PATCHS);
     }
     catch (error) {
         sql.close();
@@ -42,7 +40,8 @@ router.post('/', async function (req, res) {
         return res.status(500).send({error: global.translate.ERROR_IN_DATABASE});
     }
 
-    replacements = recordset.recordset;
+    const replacements = recordset.recordset;
+    console.error(replacements);
 
     if (!remplacement)
     {
