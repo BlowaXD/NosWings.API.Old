@@ -2,35 +2,54 @@
 const sql = require('mssql');
 
 const db_default = {
-    user: 'noswings_site',
-    password: 'LXV35i4Y4pn5sN7F6hbw',
-    server: '164.132.206.181',
+    user: 'root',
+    password: 'root',
+    server: '127.0.0.1',
     database: 'opennos'
 };
 
 module.exports = {
-    db_default,
-    domain: 'NosWings',
+    server: 'NosWings',
     servers: [
-        'NosWings'
-    ],
-    'NosWings': {
-        ip: '164.132.206.181',
-        port: 4002,
-        multiclient: true,
-        tokenSecret: 'd3hutpZ0iBpCGjxMvReEZPre4WmGIYe8LiHQAK6T',
-        db: new sql.ConnectionPool(db_default, err => console.log(`DB Connection error : ${err}`)),
-        email_config: {
-            host: 'noswings.fr',
-            port: 587,
-            secure: false, // secure:true for port 465, secure:false for port 587
-            auth: {
-                user: 'noreply@noswings.fr',
-                pass: 'cZhz57@8DOpqnzwn'
-            },
-            tls: {
-                rejectUnauthorized: false
+        'Official': {
+            public: false,
+            ip: '79.110.84.75',
+            port: 4002,
+            multiclient: true,
+            tokenSecret: 'secret',
+            db: new sql.ConnectionPool(db_default, err => console.log(`DB Connection error : ${err}`)),
+            email_config: {
+                host: '',
+                port: 587,
+                secure: false,
+                auth: {
+                    user: '',
+                    pass: ''
+                },
+                tls: {
+                    rejectUnauthorized: false
+                }
+            }
+        },
+        'NosWings': {
+            public: true,
+            ip: '127.0.0.1',
+            port: 4002,
+            multiclient: true,
+            tokenSecret: 'secret',
+            db: new sql.ConnectionPool(db_default, err => console.log(`DB Connection error : ${err}`)),
+            email_config: {
+                host: '',
+                port: 587,
+                secure: false, // secure:true for port 465, secure:false for port 587
+                auth: {
+                    user: '',
+                    pass: ''
+                },
+                tls: {
+                    rejectUnauthorized: false
+                }
             }
         }
-    }
+    ]
 };
