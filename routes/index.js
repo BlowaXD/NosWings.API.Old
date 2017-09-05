@@ -1,6 +1,6 @@
-/**
- * Created by Blowa on 6/15/2017.
- */
+'use strict';
+
 module.exports = {
-    launcher: require("./launcher/index"),
+    /* launcher: require('./launcher'), */
+    user: require('./user'),
 };

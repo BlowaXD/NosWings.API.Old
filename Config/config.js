@@ -9,8 +9,8 @@ const db_default = {
 };
 
 module.exports = {
-    server: 'NosWings',
-    servers: [
+    default_server: 'NosWings',
+    servers: {
         'Official': {
             public: false,
             ip: '79.110.84.75',
@@ -51,5 +51,5 @@ module.exports = {
                 }
             }
         }
-    ]
+    }
 };

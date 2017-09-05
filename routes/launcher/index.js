@@ -7,14 +7,13 @@
 \/     \/      \/     \/    \/            \/           \/
 
  */
-
+'use strict';
 const express = require('express');
+
 const router = express.Router();
 
-router.use('/servers', require('./servers'));
-router.use('/login', require('./login'));
-router.use('/update', require('./update/checkUpdate.js'));
-router.use('/patch', require('./patch'));
-/* router.use('/update', require('./update')); */
+router.get('/servers', require('./servers'));
+router.get('/update', require('./update/checkUpdate.js'));
+router.get('/patch', require('./patch'));
 
 module.exports = router;

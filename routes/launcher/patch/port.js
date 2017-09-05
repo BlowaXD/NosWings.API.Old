@@ -1,7 +1,4 @@
-/*
-** Created by Blowa on 6/15/2017.
-** Fixed by DarkyZ on 16/08/2017.
-*/
+'use strict';
 const findPattern = require('./findPattern.js').findPatternWithMask;
 
 function patch(data, port)
