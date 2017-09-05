@@ -13,19 +13,20 @@ const GET_ACCOUNT = `
 
 async function login(req, res)
 {
-    const server = global.config[req.body.server || global.config.default_server];
+    const server = global.config.servers[req.query.server || global.config.default_server];
     const account = {
-        username: req.body.username,
-        hashedPassword: req.body.hashedPassword,
+        username: req.query.username,
+        hashedPassword: req.query.hashedPassword,
     };
 
     /* Some checks */
     if (!server)
         return res.status(403).send({ success: false, error: global.translate.WRONG_SERVER });
-    if (!validator.isAlphanumeric(account.hashedPassword))
-        return res.status(403).send({ success: false, error: global.translate.WRONG_PASSWORD });
-    if (!validator.isAlphanumeric(account.username))
+    if (!account.username || !validator.isAlphanumeric(account.username))
         return res.status(403).send({ success: false, error: global.translate.WRONG_USERNAME });
+    if (!account.hashedPassword || !validator.isAlphanumeric(account.hashedPassword))
+        return res.status(403).send({ success: false, error: global.translate.WRONG_PASSWORD });
+
 
     /* Await the BD connection & check if account exists */
     let recordset;
