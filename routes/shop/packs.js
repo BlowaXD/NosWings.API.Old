@@ -18,8 +18,6 @@ async function get(req, res)
         const request = await server.db.request()
             .query(GET_PACKS);
         recordset = request.recordset || [];
-
-        console.log(recordset);
     }
     catch (error)
     {
