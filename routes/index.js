@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = {
-    launcher: require('./launcher'),
+    shop: require('./shop'),
     user: require('./user'),
+    launcher: require('./launcher'),
 };

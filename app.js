@@ -18,8 +18,9 @@ global.translate = require("./Config/translate");
 ** ROUTES
 */
 const routes = require('./routes');
-const route_launcher = routes.launcher;
 const route_user = routes.user;
+const route_shop = routes.shop;
+const route_launcher = routes.launcher;
 
 /*
 ** SETUP EXPRESS
@@ -35,8 +36,9 @@ app.use(bodyParser.json({limit: '10mb'}));
 app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 
 /* Basic routes */
-app.use('/launcher', route_launcher);
+app.use('/shop', route_shop);
 app.use('/user', route_user);
+app.use('/launcher', route_launcher);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
