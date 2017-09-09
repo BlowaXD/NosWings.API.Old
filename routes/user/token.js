@@ -11,8 +11,9 @@ const GET_ACCOUNT = `
 
 async function login(req, res)
 {
-    const server = global.config.servers[req.query.server || global.config.default_server];
+    const server = global.config.servers[req.query.server];
     const account = {
+        server: req.query.server,
         username: req.query.username,
         hashedPassword: req.query.hashedPassword,
     };
