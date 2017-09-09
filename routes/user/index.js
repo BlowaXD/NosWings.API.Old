@@ -1,8 +1,6 @@
 'use strict';
-const express = require('express');
+const router = require('express').Router();
 const auth_middleware = require('../../middlewares/authMiddleware.js');
-
-const router = express.Router();
 
 router.get('/token', require('./token.js'));
 

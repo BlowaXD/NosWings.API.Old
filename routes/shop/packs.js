@@ -5,7 +5,7 @@ const GET_PACKS = 'SELECT PackId, Name, Image, Description, Price FROM _GF_CS_Pa
 
 async function get(req, res)
 {
-    const server = global.config.servers[req.query.server || global.config.default_server];
+    const server = global.config.servers[req.user.server];
 
     /* Some checks */
     if (!server)
