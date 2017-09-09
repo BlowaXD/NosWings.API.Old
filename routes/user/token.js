@@ -4,7 +4,7 @@ const sql = require('mssql');
 const jwt = require('jsonwebtoken');
 
 const GET_ACCOUNT = `
-    SELECT TOP 1 [Permissions]
+    SELECT TOP 1 [Permissions], [Money]
     FROM [dbo].[Account]
     LEFT JOIN _GF_CS_Accounts
         ON [_GF_CS_Accounts].[AccountId] = [Account].[AccountId]
@@ -50,6 +50,7 @@ async function login(req, res)
 
     /* AUTH USER FOR 1 HOUR */
     account.permissions = recordset[0].Permissions || null;
+    account.money = recordset[0].Money || null;
     const data = jwt.sign(account, server.tokenSecret, { expiresIn: 3600 });
     return res.send({ success: true, data });
 }
