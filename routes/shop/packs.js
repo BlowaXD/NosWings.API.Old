@@ -1,7 +1,7 @@
 'use strict';
 const sql = require('mssql');
 
-const GET_PACKS = 'SELECT Name, Image, Description, Price FROM _GF_CS_Packs';
+const GET_PACKS = 'SELECT PackId, Name, Image, Description, Price FROM _GF_CS_Packs';
 
 async function get(req, res)
 {

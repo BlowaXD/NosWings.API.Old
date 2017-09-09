@@ -4,10 +4,8 @@ const sql = require('mssql');
 const jwt = require('jsonwebtoken');
 
 const GET_ACCOUNT = `
-    SELECT TOP 1 [Permissions], [Money]
+    SELECT TOP 1 [AccountId]
     FROM [dbo].[Account]
-    LEFT JOIN _GF_CS_Accounts
-        ON [_GF_CS_Accounts].[AccountId] = [Account].[AccountId]
     WHERE [Name] = @username
         AND [Password] = @password`;
 
@@ -26,7 +24,6 @@ async function login(req, res)
         return res.status(403).send({ success: false, error: global.translate.WRONG_USERNAME });
     if (!account.hashedPassword || !validator.isAlphanumeric(account.hashedPassword))
         return res.status(403).send({ success: false, error: global.translate.WRONG_PASSWORD });
-
 
     /* Await the BD connection & check if account exists */
     let recordset;
@@ -48,10 +45,8 @@ async function login(req, res)
     if (recordset.length <= 0)
         return res.status(403).send({ success: false, error: global.translate.COULD_NOT_FIND_USER });
 
-    /* AUTH USER FOR 1 HOUR */
-    account.permissions = recordset[0].Permissions || null;
-    account.money = recordset[0].Money || null;
-    const data = jwt.sign(account, server.tokenSecret, { expiresIn: 3600 });
+    /* AUTH USER FOR 2 HOUR */
+    const data = jwt.sign(account, server.tokenSecret, { expiresIn: 7200 });
     return res.send({ success: true, data });
 }
 
