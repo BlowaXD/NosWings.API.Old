@@ -3,7 +3,6 @@ const sql = require('mssql');
 
 async function get(req, res)
 {
-
     const server = global.config.servers[req.user.server];
 
     /* Some checks */
