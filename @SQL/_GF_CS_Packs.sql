@@ -1,9 +1,9 @@
 /*
 Navicat SQL Server Data Transfer
 
-Source Server         : NosWings V4
+Source Server         : play.test.noswings.fr
 Source Server Version : 130000
-Source Host           : 164.132.206.181:1433
+Source Host           : play.test.noswings.fr:1433
 Source Database       : opennos
 Source Schema         : dbo
 
@@ -11,7 +11,7 @@ Target Server Type    : SQL Server
 Target Server Version : 130000
 File Encoding         : 65001
 
-Date: 2017-09-10 15:56:37
+Date: 2017-09-10 16:07:03
 */
 
 
@@ -27,8 +27,7 @@ CREATE TABLE [dbo].[_GF_CS_Packs] (
 [Price] int NOT NULL ,
 [Name] varchar(60) NOT NULL ,
 [Description] varchar(255) NULL ,
-[SuperPrizeVnum] int NULL ,
-[SuperPrizeQuantity] int NULL ,
+[SuperPrizePackItemId] int NULL ,
 [MinimumForSuperPrize] int NULL ,
 [Image] varchar(255) NULL 
 )
