@@ -3,12 +3,15 @@ const sql = require('mssql');
 const jwt = require('jsonwebtoken');
 
 const GET_ACCOUNT = `
-    SELECT TOP 1 [Permissions], [Money]
-    FROM [dbo].[Account]
+    SELECT [Permissions], [Money], [Character].[Name], [Character].Class,
+        [Character].[Level], [Character].JobLevel, [Character].Gold
+    FROM [Account]
     LEFT JOIN _GF_CS_Accounts
         ON [_GF_CS_Accounts].[AccountId] = [Account].[AccountId]
-    WHERE [Name] = @username
-        AND [Password] = @password`;
+    LEFT JOIN Character
+        ON [Character].[AccountId] = [Account].[AccountId]
+    WHERE [Account].[Name] = @username
+        AND [Account].[Password] = @password`;
 
 async function login(req, res)
 {
@@ -49,7 +52,14 @@ async function login(req, res)
         success: true,
         data: {
             permissions: recordset[0].Permissions || null,
-            money: recordset[0].Money || null
+            money: recordset[0].Money || null,
+            characters: recordset.map(t => new Object({
+                name: t.Name,
+                class: t.Class,
+                level: t.Level,
+                job_level: t.JobLevel,
+                gold: t.Gold
+            }))
         }
     });
 }
