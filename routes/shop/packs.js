@@ -1,5 +1,9 @@
 'use strict';
-const GET_PACKS = 'SELECT PackId, Name, Image, Description, Price FROM _GF_CS_Packs';
+const GET_PACKS = `
+    SELECT p.*, c.Name AS CName
+    FROM _GF_CS_Packs AS p
+    JOIN _GF_CS_Categories AS c
+        ON c.CategoryId = p.CategoryId`;
 
 async function get(req, res)
 {
