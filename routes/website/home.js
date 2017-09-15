@@ -15,8 +15,6 @@ async function getNews (req, res) {
         return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
     }
 
-    console.log(recordset);
-
     /* If not, throw an error */
     if (recordset.length <= 0)
         return res.status(403).send({success: false, error: global.translate.ERROR_IN_DATABASE});
