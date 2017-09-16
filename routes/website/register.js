@@ -22,22 +22,29 @@ async function register(req, res) {
             error: "Recaptcha fail"
         });
     }
-    
-    const email = req.body.email;
-    const username = req.body.username;
-    const password = req.body.password;
-    const passwordConfirmation = req.body.passwordConfirmation;
-    const ip = req.body.email;
+
+    const account = {
+        email: req.body.email,
+        username: req.body.username,
+        password: req.body.password,
+        passwordConfirmation: req.body.password,
+        ip: req.body.ip,
+    };
+
+    if (!account.email || !account.username || !account.password || !account.ip)
+    {
+        return res.status(403).send({error: global.translate.WRONG_USERNAME});
+    }
 
     /* Some checks */
-    if (!validator.isEmail(email))
-        return res.status(403).send({error: global.translate.WRONG_USERNAMEG});
-    if (!validator.isAlphanumeric(username))
-        return res.status(403).send({error: global.translate.WRONG_USERNAMEG});
-    if (!validator.equals(password, passwordConfirmation))
-        return res.status(403).send({error: global.translate.WRONG_USERNAMEG});
-    if (password.length < 6 || password.length > 25)
-        return res.status(403).send({error: global.translate.WRONG_USERNAMEG});
+    if (!validator.isEmail(account.email))
+        return res.status(403).send({error: global.translate.WRONG_USERNAME});
+    if (!validator.isAlphanumeric(account.username))
+        return res.status(403).send({error: global.translate.WRONG_USERNAME});
+    if (!validator.equals(account.password, account.passwordConfirmation))
+        return res.status(403).send({error: global.translate.WRONG_USERNAME});
+    if (account.password.length < 6 || account.password.length > 25)
+        return res.status(403).send({error: global.translate.WRONG_USERNAME});
 
     /* Await the BD connection & check if username is already taken */
     let recordset;
@@ -45,7 +52,7 @@ async function register(req, res) {
         await sql.connect(config.db);
 
         const request = new sql.Request();
-        request.input('username', sql.VarChar, username);
+        request.input('username', sql.VarChar, account.username);
         recordset = await request.query(`${REGISTER_REQUEST}`);
     }
     catch (error) {
@@ -58,14 +65,15 @@ async function register(req, res) {
         return res.status(403).send({error: global.translate.USER_ALREADY_EXIST});
 
     /* Register account */
+    let hashedPassword = require('crypto').createHash('sha512').update(account.password).digest('hex');
     let verificationToken = crypto.randomBytes(16).toString('hex');
     try {
         const request = new sql.Request();
 
-        request.input('username', sql.VarChar, username);
-        request.input('password', sql.VarChar, hashedPassword);
-        request.input('email', sql.VarChar, email);
-        request.input('registrationIp', sql.VarChar, ip);
+        request.input('username', sql.VarChar, account.username);
+        request.input('password', sql.VarChar, account.hashedPassword);
+        request.input('email', sql.VarChar, account.email);
+        request.input('registrationIp', sql.VarChar, account.ip);
         request.input('veriftoken', sql.VarChar, verificationToken);
         await request.query(`${INSERT_USER_REQUEST}`);
     }
@@ -83,11 +91,10 @@ async function register(req, res) {
     };
 
     mailOptions.html = mailOptions.html.replaceAll("{LOGO}", config.urls.logo);
-    console.error(config.urls.logo);
     mailOptions.html = mailOptions.html.replaceAll("{SERVER}", config.server);
     mailOptions.html = mailOptions.html.replaceAll("{GREETINGS}", global.translate.REGISTRATION_GREETINGS);
-    mailOptions.html = mailOptions.html.replaceAll("{USER}", username);
-    mailOptions.html = mailOptions.html.replaceAll("{EMAIL}", email);
+    mailOptions.html = mailOptions.html.replaceAll("{USER}", account.username);
+    mailOptions.html = mailOptions.html.replaceAll("{EMAIL}", account.email);
     mailOptions.html = mailOptions.html.replaceAll("{MESSAGE}", global.translate.REGISTRATION_MESSAGE);
     mailOptions.html = mailOptions.html.replaceAll("{BUTTON_DESCRIPTION}", global.translate.REGISTRATION_BUTTON_DESCRIPTION);
     mailOptions.html = mailOptions.html.replaceAll("{BUTTON_TITLE}", global.translate.REGISTRATION_BUTTON_TITLE);

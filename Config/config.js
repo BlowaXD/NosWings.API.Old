@@ -13,9 +13,6 @@ module.exports = {
     servers: {
         'Official': {
             public: false,
-            ip: '79.110.84.75',
-            port: 4002,
-            multiclient: true,
             tokenSecret: 'secret',
             db: new sql.ConnectionPool(db_default, err => console.log(`DB Connection error : ${err}`)),
             email_config: {
@@ -33,9 +30,6 @@ module.exports = {
         },
         'NosWings': {
             public: true,
-            ip: '127.0.0.1',
-            port: 4002,
-            multiclient: true,
             tokenSecret: 'secret',
             db: new sql.ConnectionPool(db_default, err => console.log(`DB Connection error : ${err}`)),
             email_config: {
