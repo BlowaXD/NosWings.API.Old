@@ -39,7 +39,6 @@ async function post(req, res) {
         console.log(error);
         return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
     }
-    console.log('bite');
 
     /* If yes, throw an error */
     if (recordset.length !== 0) {
@@ -61,7 +60,7 @@ async function post(req, res) {
         return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
     }
 
-    const patchId = recordset.recordset[0].Id;
+    const patchId = recordset[0].Id;
 
     if (!patchId) {
         return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});

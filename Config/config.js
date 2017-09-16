@@ -10,6 +10,10 @@ const db_default = {
 
 module.exports = {
     default_server: 'NosWings',
+    e_permissions: {
+        IS_ADMIN: 0b00000001,
+        IS_GM: 0b00000010,
+    },
     servers: {
         'Official': {
             public: false,
