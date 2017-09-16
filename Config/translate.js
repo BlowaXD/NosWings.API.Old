@@ -5,7 +5,8 @@ module.exports = {
     "WRONG_SERVER": "WRONG_SERVER",
     "WRONG_PASSWORD": "WRONG_PASSWORD",
     "WRONG_USERNAME": "WRONG_USERNAME",
-    "NOT_ENOUGH_MONEY": "NOT_ENOUGH_MONEY",
-    "ERROR_IN_DATABASE": "ERROR_IN_DATABASE",
-    "COULD_NOT_FIND_USER": "COULD_NOT_FIND_USER",
+    "NOT_ENOUGH_MONEY": "Monnaie insuffisante",
+    "USER_ALREADY_EXIST": "L'utilisateur existe déjà",
+    "ERROR_IN_DATABASE": "Erreur dans la base de données",
+    "COULD_NOT_FIND_USER": "Votre identifiant n'existe pas",
 };

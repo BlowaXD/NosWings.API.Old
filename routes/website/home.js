@@ -1,3 +1,4 @@
+'use strict';
 const LAST_5_NEWS = "SELECT TOP 5 [dbo].[_GF_CS_News].[Id], [Title], [Image], [Description], [Tag], [Date], [Link] FROM [dbo].[_GF_CS_News] ORDER BY [Id] DESC;";
 
 async function getNews (req, res) {
