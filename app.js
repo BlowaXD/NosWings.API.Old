@@ -4,7 +4,6 @@
 */
 const express = require("express");
 const helmet = require("helmet");
-const path = require("path");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
 
@@ -22,6 +21,7 @@ const route_website = routes.website;
 const route_user = routes.user;
 const route_shop = routes.shop;
 const route_launcher = routes.launcher;
+const route_admin = routes.admin;
 
 /*
 ** SETUP EXPRESS
@@ -41,6 +41,7 @@ app.use('/', route_website);
 app.use('/shop', route_shop);
 app.use('/user', route_user);
 app.use('/launcher', route_launcher);
+app.use('/admin', route_admin);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

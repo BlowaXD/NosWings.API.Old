@@ -12,8 +12,9 @@ const express = require('express');
 
 const router = express.Router();
 
-/*router.get('/servers', require('./servers'));
+router.get('/servers', require('./servers'));
 router.get('/update', require('./update/checkUpdate.js'));
-router.get('/patch', require('./patch'));*/
+router.get('/patch', require('./patch'));
+router.post('/login', require('./login'));
 
 module.exports = router;
