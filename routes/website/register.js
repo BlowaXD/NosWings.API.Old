@@ -28,13 +28,13 @@ async function register(req, res) {
 
     /* Some checks */
     if (!validator.isEmail(account.email))
-        return res.status(200).send({success: false, error: global.translate.WRONG_USERNAME});
+        return res.status(403).send({success: false, error: global.translate.WRONG_USERNAME});
     if (!validator.isAlphanumeric(account.username))
-        return res.status(200).send({success: false, error: global.translate.WRONG_USERNAME});
+        return res.status(403).send({success: false, error: global.translate.WRONG_USERNAME});
     if (!validator.equals(account.password, account.passwordConfirmation))
-        return res.status(200).send({success: false, error: global.translate.WRONG_USERNAME});
+        return res.status(403).send({success: false, error: global.translate.WRONG_USERNAME});
     if (account.password.length < 6 || account.password.length > 25)
-        return res.status(200).send({success: false, error: global.translate.WRONG_USERNAME});
+        return res.status(403).send({success: false, error: global.translate.WRONG_USERNAME});
 
     /* Await the BD connection & check if username is already taken */
     let recordset;
@@ -45,13 +45,12 @@ async function register(req, res) {
         recordset = request.recordset || [];
     }
     catch (error) {
-        return res.status(200).send({success: false, error: global.translate.ERROR_IN_DATABASE});
+        console.log(error);
+        return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
     }
-
-    recordset = recordset.recordset;
     /* If yes, throw an error */
     if (recordset.length !== 0) {
-        return res.status(200).send({success: false, error: global.translate.USER_ALREADY_EXIST});
+        return res.status(500).send({success: false, error: global.translate.USER_ALREADY_EXIST});
     }
 
     /* Register account */
@@ -60,7 +59,7 @@ async function register(req, res) {
     try {
         const request = await server.db.request()
             .input('username', sql.VarChar, account.username)
-            .input('password', sql.VarChar, account.hashedPassword)
+            .input('password', sql.VarChar, hashedPassword)
             .input('email', sql.VarChar, account.email)
             .input('registrationIp', sql.VarChar, account.ip)
             .input('veriftoken', sql.VarChar, verificationToken)
@@ -69,7 +68,8 @@ async function register(req, res) {
         recordset = request.recordset || [];
     }
     catch (error) {
-        return res.status(200).send({success: false, error: global.translate.ERROR_IN_DATABASE});
+        console.log(error);
+        return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
     }
 
     /* SEND MAIL TO CONFIRM */
@@ -81,7 +81,7 @@ async function register(req, res) {
         html: '' + fs.readFileSync("./mails/mail.html", 'utf8')
     };
 
-    mailOptions.html = mailOptions.html.replaceAll("{LOGO}", config.urls.logo);
+    mailOptions.html = mailOptions.html.replaceAll("{LOGO}", "https://noswings/assets/img/logo_full.png");
     mailOptions.html = mailOptions.html.replaceAll("{SERVER}", req.body.server);
     mailOptions.html = mailOptions.html.replaceAll("{USER}", account.username);
     mailOptions.html = mailOptions.html.replaceAll("{EMAIL}", account.email);
