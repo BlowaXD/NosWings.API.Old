@@ -18,7 +18,7 @@ async function register(req, res) {
         email: req.body.email,
         username: req.body.username,
         password: req.body.password,
-        passwordConfirmation: req.body.password,
+        passwordConfirmation: req.body.passwordConfirmation,
         ip: req.body.ip,
     };
 
@@ -73,21 +73,18 @@ async function register(req, res) {
     }
 
     /* SEND MAIL TO CONFIRM */
-    let transporter = nodemailer.createTransport(config.smtp);
+    let transporter = nodemailer.createTransport(server.email_config);
     let mailOptions = {
-        from: global.translate.REGISTRATION_EMAIL_SENDER + '<' + config.smtp.auth.user + '>', // sender address
+        from: "Inscription NosWings" + '<' + server.email_config.auth.user + '>', // sender address
         to: account.email, // list of receivers
-        subject: global.translate.REGISTRATION_EMAIL_SUBJECT, // Subject line
+        subject: "Inscription NosWings : Reborn", // Subject line
         html: '' + fs.readFileSync("./mails/mail.html", 'utf8')
     };
 
     mailOptions.html = mailOptions.html.replaceAll("{LOGO}", config.urls.logo);
-    mailOptions.html = mailOptions.html.replaceAll("{SERVER}", config.server);
-    mailOptions.html = mailOptions.html.replaceAll("{GREETINGS}", global.translate.REGISTRATION_GREETINGS);
+    mailOptions.html = mailOptions.html.replaceAll("{SERVER}", req.body.server);
     mailOptions.html = mailOptions.html.replaceAll("{USER}", account.username);
     mailOptions.html = mailOptions.html.replaceAll("{EMAIL}", account.email);
-    mailOptions.html = mailOptions.html.replaceAll("{MESSAGE}", global.translate.REGISTRATION_MESSAGE);
-    mailOptions.html = mailOptions.html.replaceAll("{BUTTON_DESCRIPTION}", global.translate.REGISTRATION_BUTTON_DESCRIPTION);
     mailOptions.html = mailOptions.html.replaceAll("{BUTTON_TITLE}", "Valider mon compte");
     mailOptions.html = mailOptions.html.replaceAll("{BUTTON_LINK}", "https://noswings.fr/register/validate/" + verificationToken);
 
