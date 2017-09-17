@@ -21,8 +21,7 @@ const QUERY_GET_PATCHS = `
 async function getPatch(req, res)
 {
     const hash = req.body.hash;
-    const server = global.config[req.body.server || 'NosWings'];
-    let replacements;
+    const server = global.config.servers[req.body.server || 'NosWings'];
     let recordset;
 
     /* Some checks */
@@ -37,7 +36,7 @@ async function getPatch(req, res)
         const request = await server.db.request()
             .input('hash', sql.VarChar, hash)
             .query(QUERY_GET_PATCHS);
-        recordset = request.recordset;
+        recordset = request.recordset || [];
     }
     catch (error)
     {

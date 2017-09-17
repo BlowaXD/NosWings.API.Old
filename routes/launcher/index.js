@@ -12,9 +12,9 @@ const express = require('express');
 
 const router = express.Router();
 
+router.post('/login', require('./login'));
 router.get('/servers', require('./servers'));
 router.get('/update', require('./update/checkUpdate.js'));
-router.get('/patch', require('./patch'));
-router.post('/login', require('./login'));
+router.post('/patch', require('./patch'));
 
 module.exports = router;
