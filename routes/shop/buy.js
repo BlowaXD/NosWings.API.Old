@@ -70,8 +70,7 @@ const SEND_MAIL = `
         '-1',
         @Title)`;
 
-async function get(req, res)
-{
+async function get(req, res) {
     const server = global.config.servers[req.user.server];
     const username = req.user.username;
     const hashedPassword = req.user.hashedPassword;
@@ -80,23 +79,22 @@ async function get(req, res)
 
     /* Some checks */
     if (!server)
-        return res.status(403).send({ success: false, error: global.translate.WRONG_SERVER });
-    if (!username || !hashedPassword || !packId || !character )
-        return res.status(400).send({ success: false, error: global.translate.BAD_QUERY });
+        return res.status(403).send({success: false, error: global.translate.WRONG_SERVER});
+    if (!username || !hashedPassword || !packId || !character)
+        return res.status(400).send({success: false, error: global.translate.BAD_QUERY});
 
     /* Get account */
     let money;
     let items;
     let character_id;
-    try
-    {
+    try {
         /* Check character name */
         let request = await server.db.request()
             .input('username', sql.VarChar, username)
             .input('password', sql.VarChar, hashedPassword)
             .input('character', sql.VarChar, character)
             .query(GET_CHARACTER);
-        character_id = request.recordset[0].CharacterId
+        character_id = request.recordset[0].CharacterId;
         if (!character_id)
             throw new Error(`Unable to find character ${character}`);
 
@@ -117,10 +115,9 @@ async function get(req, res)
         if (!items || items.length < 1)
             throw new Error(`Unable to find items for pack with ID ${packId}`);
     }
-    catch (error)
-    {
+    catch (error) {
         console.log(error);
-        return res.status(500).send({ success: false, error: global.translate.ERROR_IN_DATABASE });
+        return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
     }
 
     if (money < items[0].Price)
@@ -128,9 +125,14 @@ async function get(req, res)
 
     /* Create item list */
     let item_list;
-    if (items[0].Type === 1)
-    {
-        const tmp = items[Math.floor(Math.random() * items.length)];
+    if (items[0].Type === 1) {
+        let total_items = [];
+        items.forEach(function (elem) {
+            for (let i = 0; i < elem.Probability) {
+                total_items.push(elem);
+            }
+        });
+        const tmp = total_items[Math.floor(Math.random() * total_items.length)];
         item_list = [{
             AttachementAmount: tmp.ItemQuantity,
             AttachementRarity: tmp.ItemDesign,
@@ -139,8 +141,7 @@ async function get(req, res)
             Title: req.user.server
         }];
     }
-    else
-    {
+    else {
         item_list = items.map(i => new Object({
             AttachementAmount: i.ItemQuantity,
             AttachementRarity: i.ItemDesign,
@@ -151,25 +152,21 @@ async function get(req, res)
     }
 
     /* Remove golds */
-    try
-    {
+    try {
         await server.db.request()
             .input('price', sql.Int, items[0].Price)
             .input('username', sql.VarChar, username)
             .input('password', sql.VarChar, hashedPassword)
             .query(UPDATE_MONEY);
     }
-    catch (error)
-    {
+    catch (error) {
         console.log(error);
-        return res.status(500).send({ success: false, error: global.translate.ERROR_IN_DATABASE });
+        return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
     }
 
     /* Send items */
-    for (const i of item_list)
-    {
-        try
-        {
+    for (const i of item_list) {
+        try {
             await server.db.request()
                 .input('character_id', sql.Int, character_id)
                 .input('AttachementAmount', sql.Int, i.AttachementAmount)
@@ -179,26 +176,23 @@ async function get(req, res)
                 .input('Title', sql.VarChar, i.Title)
                 .query(SEND_MAIL);
         }
-        catch (error)
-        {
+        catch (error) {
             console.log(error);
-            return res.status(500).send({ success: false, error: global.translate.ERROR_IN_DATABASE });
+            return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
         }
     }
 
     /* Log */
-    try
-    {
+    try {
         await server.db.request()
             .input('price', sql.Int, items[0].Price)
             .input('username', sql.VarChar, username)
             .input('password', sql.VarChar, hashedPassword)
             .query(INSERT_LOG);
     }
-    catch (error)
-    {
+    catch (error) {
         console.log(error);
-        return res.status(500).send({ success: false, error: global.translate.ERROR_IN_DATABASE });
+        return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
     }
 
     res.sendStatus(200);
