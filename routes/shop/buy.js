@@ -1,5 +1,7 @@
 'use strict';
+const querystring = require('querystring');
 const sql = require('mssql');
+const request = require('request');
 
 const INSERT_LOG = `
     INSERT INTO _GF_CS_BuyLogs (AccountId, Type, [Value])
@@ -164,38 +166,87 @@ async function get(req, res) {
         return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
     }
 
-    /* Send items */
-    for (const i of item_list) {
+    // AUTH ON WEBAPI
+    const form = {
+        grant_type: 'password',
+        username: 'NosWingsNosmall',
+        password: 'DStrejuiyFGDrteGH',
+    };
+    const formData = querystring.stringify(form);
+    const contentLength = formData.length;
+    const opt = {
+        method: 'post',
+        url: server.ingame_api_url + '/mail',
+        headers: {
+            'Content-Length': contentLength,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData
+    };
+
+    // GET TOKEN
+    request(opt, async (err, response, body) => {
+        if (err) {
+            // FUCK IT
+            return;
+        }
+        for (const i of item_list) {
+            const sendmailOpt = {
+                method: 'post',
+                url: server.ingame_api_url + '/mail',
+                headers: {
+                    'Content-Length': contentLength,
+                    'Authorization': `Bearer ${req.body.access_token}`
+                },
+                body: {
+                    CharacterId: character_id,
+                    WorldGroup: req.user.server,
+                    IsNosmall: true,
+                    VNum: i.AttachmentVNum,
+                    Amount: i.AttachementAmount,
+                    Rare: i.AttachementRarity,
+                    Upgrade: i.AttachementRarity,
+                }
+            };
+            // SEND ITEM
+            request(sendmailOpt);
+        }
+
+        /* Send items */
+        /*
+        for (const i of item_list) {
+            try {
+                await server.db.request()
+                    .input('character_id', sql.Int, character_id)
+                    .input('AttachementAmount', sql.Int, i.AttachementAmount)
+                    .input('AttachementRarity', sql.Int, i.AttachementRarity)
+                    .input('AttachmentUpgrade', sql.Int, i.AttachmentUpgrade)
+                    .input('AttachmentVNum', sql.Int, i.AttachmentVNum)
+                    .input('Title', sql.VarChar, i.Title)
+                    .query(SEND_MAIL);
+            }
+            catch (error) {
+                console.log(error);
+                return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
+            }
+        }
+        */
+
+        /* Log */
         try {
             await server.db.request()
-                .input('character_id', sql.Int, character_id)
-                .input('AttachementAmount', sql.Int, i.AttachementAmount)
-                .input('AttachementRarity', sql.Int, i.AttachementRarity)
-                .input('AttachmentUpgrade', sql.Int, i.AttachmentUpgrade)
-                .input('AttachmentVNum', sql.Int, i.AttachmentVNum)
-                .input('Title', sql.VarChar, i.Title)
-                .query(SEND_MAIL);
+                .input('price', sql.Int, items[0].Price)
+                .input('username', sql.VarChar, username)
+                .input('password', sql.VarChar, hashedPassword)
+                .query(INSERT_LOG);
         }
         catch (error) {
             console.log(error);
             return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
         }
-    }
 
-    /* Log */
-    try {
-        await server.db.request()
-            .input('price', sql.Int, items[0].Price)
-            .input('username', sql.VarChar, username)
-            .input('password', sql.VarChar, hashedPassword)
-            .query(INSERT_LOG);
-    }
-    catch (error) {
-        console.log(error);
-        return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
-    }
-
-    res.sendStatus(200);
+        res.sendStatus(200);
+    });
 }
 
 module.exports = get;
