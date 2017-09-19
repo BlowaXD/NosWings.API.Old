@@ -153,19 +153,6 @@ async function get(req, res) {
         }));
     }
 
-    /* Remove golds */
-    try {
-        await server.db.request()
-            .input('price', sql.Int, items[0].Price)
-            .input('username', sql.VarChar, username)
-            .input('password', sql.VarChar, hashedPassword)
-            .query(UPDATE_MONEY);
-    }
-    catch (error) {
-        console.log(error);
-        return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
-    }
-
     // AUTH ON WEBAPI
     const form = {
         grant_type: 'password',
@@ -190,6 +177,7 @@ async function get(req, res) {
             // FUCK IT
             return;
         }
+
         for (const i of item_list) {
             const sendmailOpt = {
                 method: 'POST',
@@ -213,8 +201,35 @@ async function get(req, res) {
                 if (erro)
                 {
                     console.log(erro);
+                    return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
                 }
             });
+
+        }
+
+        /* Remove golds */
+        try {
+            await server.db.request()
+                .input('price', sql.Int, items[0].Price)
+                .input('username', sql.VarChar, username)
+                .input('password', sql.VarChar, hashedPassword)
+                .query(UPDATE_MONEY);
+        }
+        catch (error) {
+            console.log(error);
+            return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
+        }
+        /* Log */
+        try {
+            await server.db.request()
+                .input('price', sql.Int, items[0].Price)
+                .input('username', sql.VarChar, username)
+                .input('password', sql.VarChar, hashedPassword)
+                .query(INSERT_LOG);
+        }
+        catch (error) {
+            console.log(error);
+            return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
         }
 
         /* Send items */
@@ -236,19 +251,6 @@ async function get(req, res) {
             }
         }
         */
-
-        /* Log */
-        try {
-            await server.db.request()
-                .input('price', sql.Int, items[0].Price)
-                .input('username', sql.VarChar, username)
-                .input('password', sql.VarChar, hashedPassword)
-                .query(INSERT_LOG);
-        }
-        catch (error) {
-            console.log(error);
-            return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
-        }
 
         res.sendStatus(200);
     });
