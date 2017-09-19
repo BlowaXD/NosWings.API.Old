@@ -130,7 +130,7 @@ async function get(req, res) {
     if (items[0].Type === 1) {
         let total_items = [];
         items.forEach(function (elem) {
-            for (let i = 0; i < elem.Probability) {
+            for (let i = 0; i < elem.Probability; i++) {
                 total_items.push(elem);
             }
         });
@@ -176,7 +176,7 @@ async function get(req, res) {
     const contentLength = formData.length;
     const opt = {
         method: 'post',
-        url: server.ingame_api_url + '/mail',
+        url: server.ingame_api_url + '/token',
         headers: {
             'Content-Length': contentLength,
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -192,13 +192,13 @@ async function get(req, res) {
         }
         for (const i of item_list) {
             const sendmailOpt = {
-                method: 'post',
+                method: 'POST',
                 url: server.ingame_api_url + '/mail',
                 headers: {
-                    'Content-Length': contentLength,
-                    'Authorization': `Bearer ${req.body.access_token}`
+                    'Authorization': `Bearer ${body.access_token}`,
+                    'Content-Type': 'application/json'
                 },
-                body: {
+                body: JSON.stringify({
                     CharacterId: character_id,
                     WorldGroup: req.user.server,
                     IsNosmall: true,
@@ -206,10 +206,15 @@ async function get(req, res) {
                     Amount: i.AttachementAmount,
                     Rare: i.AttachementRarity,
                     Upgrade: i.AttachementRarity,
-                }
+                })
             };
             // SEND ITEM
-            request(sendmailOpt);
+            await request(sendmailOpt, async (erro, responses, bodi) =>{
+                if (erro)
+                {
+                    console.log(erro);
+                }
+            });
         }
 
         /* Send items */
