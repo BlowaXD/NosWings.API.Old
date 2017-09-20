@@ -22,5 +22,6 @@ router.use((req, res, next) => {
     res.redirect(req.protocol + '://' + req.get('host') + '/');
 });
 router.post('/patch', require('./patch.js'));
+router.post('/addMoney', require('./addMoney.js'));
 
 module.exports = router;

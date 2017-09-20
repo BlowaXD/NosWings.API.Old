@@ -219,6 +219,7 @@ async function get(req, res) {
             console.log(error);
             return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
         }
+
         /* Log */
         try {
             await server.db.request()
@@ -233,24 +234,6 @@ async function get(req, res) {
         }
 
         /* Send items */
-        /*
-        for (const i of item_list) {
-            try {
-                await server.db.request()
-                    .input('character_id', sql.Int, character_id)
-                    .input('AttachementAmount', sql.Int, i.AttachementAmount)
-                    .input('AttachementRarity', sql.Int, i.AttachementRarity)
-                    .input('AttachmentUpgrade', sql.Int, i.AttachmentUpgrade)
-                    .input('AttachmentVNum', sql.Int, i.AttachmentVNum)
-                    .input('Title', sql.VarChar, i.Title)
-                    .query(SEND_MAIL);
-            }
-            catch (error) {
-                console.log(error);
-                return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
-            }
-        }
-        */
 
         res.sendStatus(200);
     });
