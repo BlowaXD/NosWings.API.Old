@@ -6,6 +6,7 @@ const REQUEST_CHECK_ACCOUNT = 'SELECT TOP 1 Authority FROM [dbo].[Account] WHERE
 const REQUEST_VALIDATE_ACCOUNT = "UPDATE [Account] SET [Authority]='0' WHERE [VerificationToken] = @verifToken;";
 
 async function validate(req, res) {
+    const server = global.config.servers[req.body.server || "NosWings"];
     let validationToken = req.params.validationtoken;
 
     if (!validator.isAlphanumeric(validationToken))
