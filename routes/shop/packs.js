@@ -3,7 +3,8 @@ const GET_PACKS = `
     SELECT p.*, c.Name AS CName
     FROM _GF_CS_Packs AS p
     JOIN _GF_CS_Categories AS c
-        ON c.CategoryId = p.CategoryId`;
+        ON c.CategoryId = p.CategoryId
+        ORDER BY CategoryId`;
 
 async function get(req, res)
 {
