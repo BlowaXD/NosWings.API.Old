@@ -11,7 +11,8 @@ const GET_ACCOUNT = `
     LEFT JOIN Character
         ON [Character].[AccountId] = [Account].[AccountId]
     WHERE [Account].[Name] = @username
-        AND [Account].[Password] = @password`;
+        AND [Account].[Password] = @password
+        AND [Character].[State] = 1`;
 
 async function login(req, res)
 {

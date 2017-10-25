@@ -5,7 +5,7 @@ const nodemailer = require("nodemailer");
 const sql = require("mssql");
 const fs = require('fs');
 const REGISTER_REQUEST = 'SELECT TOP 1 Name FROM [dbo].[Account] WHERE [Name] = @username;';
-const INSERT_USER_REQUEST = 'INSERT INTO dbo.Account (Authority, Name, Password, Email, RegistrationIp, VerificationToken) VALUES (-1, @username, @password, @email, @registrationIp, @veriftoken);';
+const INSERT_USER_REQUEST = 'INSERT INTO dbo.Account (Authority, Name, Password, Email, RegistrationIp, VerificationToken) VALUES (0, @username, @password, @email, @registrationIp, @veriftoken);';
 
 String.prototype.replaceAll = function (search, replacement) {
     const target = this;
