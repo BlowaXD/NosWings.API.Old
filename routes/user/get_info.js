@@ -3,16 +3,15 @@ const sql = require('mssql');
 const jwt = require('jsonwebtoken');
 
 const GET_ACCOUNT = `
-    SELECT [Permissions], [Money], [Character].[Name], [Character].Class,
-        [Character].[Level], [Character].JobLevel, [Character].Gold
+SELECT [Permissions], [Money], [Character].[Name], [Character].Class, [Character].Gender, [Character].HeroLevel,
+[Character].[Level], [Character].JobLevel, [Character].Gold, [Character].State
     FROM [Account]
     LEFT JOIN _GF_CS_Accounts
         ON [_GF_CS_Accounts].[AccountId] = [Account].[AccountId]
     LEFT JOIN Character
         ON [Character].[AccountId] = [Account].[AccountId]
     WHERE [Account].[Name] = @username
-        AND [Account].[Password] = @password
-        AND [Character].[State] = 1`;
+        AND [Account].[Password] = @password`;
 
 async function login(req, res)
 {
@@ -54,10 +53,12 @@ async function login(req, res)
         data: {
             permissions: recordset[0].Permissions || null,
             money: recordset[0].Money || null,
-            characters: recordset.map(t => new Object({
+            characters: recordset.filter(character => character.State === 1).map(t => new Object({
                 name: t.Name,
                 class: t.Class,
+		sex: t.Gender,
                 level: t.Level,
+		hero_level: t.HeroLevel,
                 job_level: t.JobLevel,
                 gold: t.Gold
             }))
