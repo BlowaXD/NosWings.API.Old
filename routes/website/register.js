@@ -28,13 +28,13 @@ async function register(req, res) {
 
     /* Some checks */
     if (!validator.isEmail(account.email))
-        return res.status(403).send({success: false, error: global.translate.WRONG_USERNAME});
+        return res.status(403).send({success: false, error: global.translate.WRONG_EMAIL});
     if (!validator.isAlphanumeric(account.username))
         return res.status(403).send({success: false, error: global.translate.WRONG_USERNAME});
     if (!validator.equals(account.password, account.passwordConfirmation))
-        return res.status(403).send({success: false, error: global.translate.WRONG_USERNAME});
+        return res.status(403).send({success: false, error: global.translate.WRONG_PASSWORD});
     if (account.password.length < 6 || account.password.length > 25)
-        return res.status(403).send({success: false, error: global.translate.WRONG_USERNAME});
+        return res.status(403).send({success: false, error: global.translate.WRONG_PASSWORD});
 
     /* Await the BD connection & check if username is already taken */
     let recordset;

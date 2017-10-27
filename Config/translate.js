@@ -3,8 +3,9 @@
 module.exports = {
     "BAD_QUERY": "BAD_QUERY",
     "WRONG_SERVER": "WRONG_SERVER",
-    "WRONG_PASSWORD": "WRONG_PASSWORD",
-    "WRONG_USERNAME": "WRONG_USERNAME",
+    "WRONG_PASSWORD": "Mot de passe invalide",
+    "WRONG_USERNAME": "Identifiant invalide",
+    "WRONG_EMAIL": "Email invalide",
     "NOT_ENOUGH_MONEY": "Monnaie insuffisante",
     "USER_ALREADY_EXIST": "L'utilisateur existe déjà",
     "ACCOUNT_VALIDATION_ALREADY":"Votre compte a déjà été validé",
