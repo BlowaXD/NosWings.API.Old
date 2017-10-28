@@ -12,4 +12,5 @@ module.exports = {
     "ACCOUNT_VALIDATION_SUCCESS": "Votre compte a été validé avec succès",
     "ERROR_IN_DATABASE": "Erreur dans la base de données",
     "COULD_NOT_FIND_USER": "Votre identifiant n'existe pas",
+    "REGISTRATION_SUCCESS": "Compte créé avec succès"
 };
