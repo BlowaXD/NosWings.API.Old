@@ -43,7 +43,7 @@ async function post(req, res) {
         try {
             const request = await server.db.request()
                 .input('characterName', sql.VarChar, account.Character)
-                .query(`${ADD_ACCOUNT}`);
+                .query(`${GET_ACCOUNTID}`);
             accountId = request.recordset || [];
         }
         catch (error) {
