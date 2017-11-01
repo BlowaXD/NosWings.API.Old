@@ -35,7 +35,7 @@ module.exports = {
         'NosWings': {
             public: true,
             tokenSecret: 'secret',
-            ingame_api_url : 'http://play.noswings.fr:9000',
+            ingame_api_url: db_default.server + ':9000',
             db: new sql.ConnectionPool(db_default, err => console.log(`DB Connection error : ${err}`)),
             email_config: {
                 host: 'gamefield.fr',
