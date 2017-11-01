@@ -9,8 +9,10 @@
  */
 
 const sql = require('mssql');
-const ADD_MONEY_QUERY = 'UPDATE a SET Money = Money + @addMoney FROM _GF_CS_Accounts AS a JOIN [Character] AS c ON c.AccountId = a.AccountId WHERE c.Name = @characterName;'
-
+const ADD_MONEY_QUERY = 'UPDATE a SET Money = Money + @addMoney FROM _GF_CS_Accounts AS a JOIN [Character] AS c ON c.AccountId = a.AccountId WHERE c.Name = @characterName;';
+const ADD_ACCOUNT = 'INSERT INTO [opennos].[dbo].[_GF_CS_Accounts] ([AccountId], [Money], [Permissions]) VALUES (@AccountId, 0, 0);';
+const GET_ACCOUNT = 'SELECT AccountId FROM [_GF_CS_Accounts] AS acc JOIN [Character] AS character ON character.AccountId = a.AccountId WHERE character.Name = @characterName;';
+const GET_ACCOUNTID = 'SELECT AccountId FROM [Character] WHERE Name = @characterName;';
 
 async function post(req, res) {
     const server = global.config.servers[req.body.server || 'NosWings'];
@@ -18,12 +20,47 @@ async function post(req, res) {
         Money: req.body.money,
         Character: req.body.character
     };
-	
+
     if (!account || !account.Money || !account.Character) {
         return res.sendStatus(400);
     }
 
-    /* Await the BD connection & UPLOAD A NEW PATCH IF HASH IS NOT TAKEN */
+    let recordset;
+
+    try {
+        const request = await server.db.request()
+            .input('characterName', sql.VarChar, account.Character)
+            .query(`${GET_ACCOUNT}`);
+        recordset = request.recordset || [];
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
+    }
+
+    if (recordset.length === 0) {
+        let accountId;
+        try {
+            const request = await server.db.request()
+                .input('characterName', sql.VarChar, account.Character)
+                .query(`${ADD_ACCOUNT}`);
+            accountId = request.recordset || [];
+        }
+        catch (error) {
+            console.error(error);
+            return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
+        }
+        try {
+            await server.db.request()
+                .input('AccountId', sql.Int, accountId)
+                .query(`${ADD_ACCOUNT}`);
+        }
+        catch (error) {
+            console.error(error);
+            return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
+        }
+    }
+
     try {
         const request = await server.db.request()
             .input('addMoney', sql.Int, account.Money)
@@ -32,7 +69,7 @@ async function post(req, res) {
         recordset = request.recordset || [];
     }
     catch (error) {
-		console.log(error);
+        console.log(error);
         return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
     }
 
