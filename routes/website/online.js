@@ -7,8 +7,8 @@ async function get(req, res) {
     // AUTH ON WEBAPI
     const form = {
         grant_type: 'password',
-        username: 'admin',
-        password: 'test',
+        username: 'NosWingsNosmall',
+        password: 'DStrejuiyFGDrteGH',
     };
     const formData = querystring.stringify(form);
     const contentLength = formData.length;
