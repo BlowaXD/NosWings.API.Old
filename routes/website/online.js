@@ -27,8 +27,6 @@ async function get(req, res) {
         if (err) {
             res.sendStatus(500);
         }
-        console.log(body);
-
         const getStatusOpt = {
             method: 'GET',
             url: server.ingame_api_url + '/stat',
@@ -41,7 +39,7 @@ async function get(req, res) {
         await request(getStatusOpt, async (erro, responses, bodi) => {
             if (erro) {
                 console.log(erro);
-                return res.status(500).send({success: false, error: global.translate.ERROR_IN_DATABASE});
+                return res.status(500);
             }
             res.status(200).send(bodi);
         });
