@@ -3,7 +3,7 @@ const LAST_5_NEWS = "SELECT TOP 5 [dbo].[_GF_CS_News].[Id], [Title], [Image], [D
 
 async function getNews (req, res) {
 
-    const server = global.config.servers[req.query.server];
+    const server = global.config.servers["NosWings"];
     /* Await the BD connection & check if account exists */
     let recordset;
     try {

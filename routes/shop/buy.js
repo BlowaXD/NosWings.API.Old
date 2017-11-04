@@ -183,7 +183,7 @@ async function get(req, res) {
                 method: 'POST',
                 url: server.ingame_api_url + '/mail',
                 headers: {
-                    'Authorization': `Bearer ${body.access_token}`,
+                    'Authorization': `bearer ${body.access_token}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
